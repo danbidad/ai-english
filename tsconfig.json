@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": false,
+    "noImplicitAny": false,
+    "types": ["node", "jest"],
+    "outDir": "./dist",
+    "rootDir": "./server"
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["server/**/*"],
+  "exclude": ["node_modules"]
+}

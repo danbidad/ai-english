@@ -1,0 +1,338 @@
+today we're going to run some
+experiments we're building the biggest
+and most powerful Mini PC in the world
+armed with two power supplies three
+adapters and two gpus one of which is
+RTX 490 at the end we'll compare it with
+a desktop PC powered by an I9 14900 K
+the Mini PC arrives in two boxes so
+let's start by unboxing this one which
+contains the Mini PC itself called the
+belink gti1 14 Ultra AI PC Inside the
+Box aside from the aluminum case that
+resembles Apple's Mac Mini you'll find
+two cables an HDMI and a power cable
+this Mini PC is certainly not light
+considering its cases made of aluminum
+which I hope helps with cooling the
+processor the port selection's pretty
+good I like the USBC and card reader on
+the front let's take it apart and see
+what's inside the screws are hidden
+under rubber plugs which are not easy to
+remove and can be easily lost if you're
+not careful once all the screws are out
+the bottom cover comes off without much
+effort beneath it there's a coarse dust
+filter held by four screws removing it
+reveals access to the built-in power
+supply and dual sub wolfers whose sound
+changes depending on how the PC is
+positioned on the table I'll show that
+later the power supply seems to be rated
+at 140 Watts I'm not an expert in power
+supply circuit design but I can at least
+pretend to know what I'm looking at for
+those who do understand this stuff it
+might be interesting I noticed that the
+cooling for the power supply relies only
+on thermal pads and the case itself next
+we need to remove a plate held by three
+screws and one post which is an easy to
+unscrew of course every Homemaker has
+pliers in the kitchen just for jobs like
+this after removing this armor plate we
+gain access to two crucial ddr5 RAM
+sticks totaling 32 GB at 5,600 MHz and a
+1 TB gen 4x4 SSD there are two nvme
+slots for ssds and one for a Wi-Fi 7
+module the standoff system looks
+interesting but isn't very convenient
+for disassembly luckily compared to the
+Mac Mini almost all the screws in this
+Mini PC are the same size making it
+easier to reassemble still the
+complexity level of this machine is
+evident on your screens removing the
+motherboard from the case is not
+straightforward both the cooling system
+and the board itself are quite Hefty
+let's take off the fan and check out the
+heat sink cooling the processor we've
+got a full Copper design with one wide
+copper heat pipe now let's see what's
+underneath it appears the processor is
+cooled using liquid metal which is great
+but over time it could dry out due to
+direct contact with the copper which
+oxidizes ideally the heat pipe should be
+nickel plated to keep the liquid metal
+from solidifying in any case it's much
+better than traditional thermal paste in
+terms of cooling especially considering
+the processor here is quite powerful an
+Intel Core Ultra 7 155h with 16 cores
+and 22 threads I also decided to check
+whether a discrete GPU would work if
+connected almost directly to the
+built-in pcii Express x16 slot I'm
+connecting it via a flexible fire hose
+as the power supply and a few protruding
+components block the GPU from being
+installed directly I'm curious whether
+this setup will run with a standard
+desktop power supply everything's ready
+to go I turned on the PC and as you can
+see it boots up and even displays an
+image on the monitor the slot operates
+in X8 mode not x16 which means there are
+only eight pcie lanes available on the
+CPU even though the slot physically
+looks like a 16 Lane one however after
+installing the drivers for the GPU
+issues began to appear it seems the x16
+slot isn't providing power to the GPU
+and it starts lagging right on the
+desktop unfortunately this setup does
+not work in our case I also tried
+connecting the GPU via the m.2 nvme slot
+as this method should provide power
+directly to the x16 slot on the graphics
+card theoretically increasing the
+chances of success I booted up our
+Frankenstein and once again it
+successfully powered on but sadly it
+began lagging on the desktop just like
+before so running a discrete GPU is only
+possible through the proprietary dock
+station on the other hand why turn your
+PC into a Frankenstein when you can buy
+a ready-made Solution that's Compact and
+more convenient assembling this PC is a
+real test for your patients as there are
+more components here than in a typical
+desktop build one of the more difficult
+tasks was putting together just the
+power button which also functions as a
+fingerprint scanner it's not the most
+convenient Mini PC for quick access to
+the SSD and RAM although you probably
+won't need to disassemble it every day
+for the price of 850 bucks it's a bit
+much for such a box and I've realized
+that most of the cost is for the CPU
+itself but for the compactness and the
+options to connect a discrete GPU it
+might be worth the premium and that's
+not all it offers next I'll show you the
+BIOS capabilities of this Beast the
+belink dedicated graphics docking
+station allows us to connect the most
+powerful GPU in the world to our very
+large Mini PC simply put it's a power
+supply unit with a riser for the GPU the
+kit includes the dock itself and a
+safety frame I've forgotten what the USB
+port is for but you can install an
+external Wi-Fi with the Tenna as you can
+see this board is equipped with eight
+PCI lanes for the GPU keeping in mind
+that the processor also supports a
+maximum of eight Lanes there's even a
+connector for an additional fan let's
+take a closer look inside our dock to
+see what else it has to offer the back
+cover is secured by just four screws and
+once removed we gain access to the power
+supply and a slot for Wi-Fi or another
+SSD there's so much space in here that
+you could even hide something here's how
+the components of our powerful 600 W
+power supply look today I'm going to
+push it to the Max and see if it really
+delivers 600 WS taking it apart revealed
+that it's not just a power supply and
+riser but also has enough space for
+secret compartments which explains the
+$160 price tag for a power supply alone
+that's quite expensive but considering
+all the extra features it might be worth
+paying for the compactness and minimal
+cabling the downside of this power
+supply is that it doesn't come with a
+600 W cable for modern gpus it only has
+two old standard 8 Pin connectors a
+particularly tricky move was making
+these two connectors identical to the
+ones on the GPU that means the ports
+differ from those on regular power
+supplies not knowing this I decided to
+skip buying an adapter for modern gpus
+and instead used a full cable from
+another power supply imagine my
+disappointment when I realized that the
+keys on the cable connectors and the
+power supply don't match and then I
+looked at the pin layout and thought why
+not just cut off the key pins on the
+cable to fit it into the connector the
+world wasn't ready for such dumb ideas
+unfortunately nothing caught fire the
+power supply just triggered its
+protection mode and refused to power on
+but I didn't stop there I pulled out the
+two wires that were causing the short
+circuit and tried powering on the supply
+again it worked encouraging me to
+continue the experiment in the end the
+GPU didn't pull more than 90 watts in
+game so I quickly abandoned this idea as
+a bad dream considering how my blood
+pressure spikes when I mess with the
+$1,500 GPU eventually I bought three
+adapters two of them split one pin cable
+into two eight pins and the third was
+the standard Nvidia adapter for four
+eight pins this way we'll attempt to
+overclock the GPU in this setup if we
+connect all these Pokémon together we
+get a solid and reliable like The
+Budapest memorandum 600 wat bouquet to
+power the GPU I rambled so long that the
+computer decided to assemble itself
+Jokes Aside it actually goes together
+quite easily you just take the power
+supply put it on the table grab the Mini
+PC with your left hand find the GPU
+connector and hook it up to the docking
+station we then plug in our fiery 28 pin
+cables take the safety frame components
+and secure them Min PC so that thieves
+can't easily steal it add another
+element secure it with two screws from
+the bottom so our budget RTX 490 which
+we powerfully shoot like me from all
+angles inserted into the slot is firmly
+fastened with two more included screws
+finally we try to click the 16 pin
+connector into place creating an
+anaconda of cables that need to be
+wrangled together it looks way too
+aggressive in my opinion but hey we've
+built the largest mini piece in the
+world so it fits take a look at this 88
+mm anti-aircraft gun terrible thing the
+Germans used to put such things on tiger
+tanks now this is what I call a glimpse
+into the future comparing it to a
+regular pc the size difference is
+obvious one can easily fit it into a
+backpack for a quick trip while the
+other requires a car to transport the
+largest Mini PC weighs only 5.3 kg
+whereas a mini tower with the same
+graphics card can weigh up to 8.6 kg G
+turning it on is a bit different from a
+typical PC because we have two power
+supplies that need to be plugged in
+first we press this button then the
+button on the mini PC itself and it
+should power on safety first so I
+decided to check our bouquet and the
+power supply for stability and heat I
+ran a firm Mark test removed the power
+limit on the GPU and as you can see it's
+pulling 540 to 550 WS after 10 minutes
+of testing the power supply didn't shut
+down and all the connection wires were
+only slightly warmed so the setup's
+pretty solid an interesting feature in
+the Bios you can overclock the RAM and
+even adjust its voltage though I won't
+be doing that of course you can also set
+any power limit for the CPU 54 65 or
+even 100 Watts however the manufacturer
+claimed that this Mini PC is designed
+for a Max of 65 Watts so I set it to 65
+and here's the difference in gaming
+between 54 Watts 65 watts and 80 WT
+power consumption there's almost none
+I've never seen worse efficiency give
+you an idea the frequencies are
+different even if you can't really see
+it before I forget let me show you a
+comparison of the sound from this Mini
+PC with the sound from an iPhone 16 Pro
+
+
+Max as you heard the Mini PC sounds
+better on the recording but in real life
+the iPhone has a basier though quieter
+sound unfortunately I can't test the
+microphone because that would require me
+to travel from the US to Ukraine to
+record my voice and I'm not sure why you
+think this is the voice of AI maybe
+because of some errors in the script I
+was actually hired to do the voice over
+just so you know I also noticed that the
+gaming tests are the least viewed even
+though I spend the most time on them so
+if you're interested in seeing the
+results of the built-in Intel art
+graphics card testing feel free to pause
+and take a look look at the FPS I'm also
+curious about the performance loss in
+games due to using only eight PCI
+Express Lanes in this Mini PC the loss
+ranges from 0% to 5 to 8% which is
+almost negligible compared to a full 16
+Lane interface even more interesting to
+me is the power of the ultra 7 155h
+processor compared to the I9 14900 K
+which has had its power consumption
+limits removed as you can see in older
+games like GTA 5 the difference is
+minimal but in games like Allen wake 2
+and similar titles the Gap can be as
+much as twofold in favor of the I9 14900
+K in rdr2 the i 94900 k produced so many
+frames that the test even stopped
+running normally as you may have noticed
+it also hit the monitor's refresh rate
+without that limitation it would have
+been around 200 FPS however the power
+consumption of the I9 14900 K is
+outrageous compared to the ultra
+755h and while we don't see the
+frequency and power consumption of the
+mobile processor since Unfortunately
+they aren't displayed rest assured it
+constantly consumed 65 Watts meanwhile
+the I9 14900 K occasionally exceeded 200
+Watts the Mini PC is almost silent in
+operation and the CPU temperatures don't
+rise above 80° in benchmarks the ultra 7
+155h scores half as many points as the
+top I9 14900 K meaning its raw
+performance is half however in practice
+the performance difference in various
+tasks can be both smaller and larger for
+example in video rendering the I9 is
+about 50% faster not 100% as in the
+benchmarks so this Mini PC is a decent
+option for those who have limited desk
+space and don't need excessive CPU power
+moreover as the test showed it's far
+from a weak processor in most games it
+exceeds 100 FPS except for cyberpunk
+2077 though if dlss is turned off the
+issues won't be the CPU but rather the
+GPU so as you've understood this was a
+commercial review if anyone liked this
+Mini PC I'll leave a link to the
+manufacturer's website in the
+description below the video they have
+plenty of interesting stuff there thank
+you for your attention and see you next
+time

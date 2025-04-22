@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html ng-app="multilingualApp">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>유튜브 자막 2개 동시 보기 및 인공지능 문장 분석</title>
+	<link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<style>
+		body {
+			padding: 20px;
+			font-family: 'Noto Sans KR', sans-serif;
+		}
+
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+		}
+
+		.language-selector {
+			margin-bottom: 30px;
+		}
+
+		.flag-icon {
+			width: 24px;
+			height: 18px;
+			margin-right: 10px;
+			vertical-align: middle;
+			border: 1px solid #ddd;
+		}
+
+		.language-btn {
+			margin: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			text-align: left;
+			padding: 8px 12px;
+		}
+
+		.section {
+			margin-bottom: 30px;
+			padding: 20px;
+			border: 1px solid #eee;
+			border-radius: 5px;
+		}
+
+		.current-language {
+			background-color: #f0f8ff;
+			border-left: 4px solid #007bff;
+			font-weight: bold;
+		}
+
+		.language-header {
+			padding: 10px 0;
+			margin-bottom: 15px;
+			border-bottom: 1px solid #eee;
+		}
+	</style>
+
+	<style>
+		body {
+			padding: 20px;
+			font-family: 'Noto Sans KR', sans-serif;
+		}
+
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+		}
+
+		.language-selector {
+			margin-bottom: 30px;
+		}
+
+		.flag-icon {
+			width: 24px;
+			height: 18px;
+			margin-right: 10px;
+			vertical-align: middle;
+			border: 1px solid #ddd;
+		}
+
+		.language-btn {
+			margin: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			text-align: left;
+			padding: 8px 12px;
+		}
+
+		.section {
+			margin-bottom: 30px;
+			padding: 20px;
+			border: 1px solid #eee;
+			border-radius: 5px;
+		}
+
+		.current-language {
+			background-color: #f0f8ff;
+			border-left: 4px solid #007bff;
+			font-weight: bold;
+		}
+
+		.language-header {
+			padding: 10px 0;
+			margin-bottom: 15px;
+			border-bottom: 1px solid #eee;
+		}
+
+		/* 드롭다운 관련 추가 스타일 */
+		.dropdown-toggle {
+			width: 100%;
+			text-align: left;
+			justify-content: flex-start;
+		}
+
+		.dropdown-menu {
+			width: 100%;
+		}
+
+		.dropdown-item {
+			padding: 8px 16px;
+		}
+
+		.dropdown-item:hover {
+			background-color: #f0f8ff;
+		}
+
+		.dropdown-item.active {
+			background-color: #f0f8ff;
+			color: #000;
+			font-weight: bold;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-cookies.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="common.js"></script>
+	<script src="youtube_loader.js"></script>
+</head>
+<body ng-controller="LanguageController">
+<div class="container">
+	<!-- 언어 선택 섹션 -->
+	<div class="language-selector">
+		<!-- 커스텀 언어 선택 드롭다운 -->
+		<div class="dropdown mb-4">
+			<button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+				<img ng-src="https://flagcdn.com/24x18/{{ languages[currentLang].flag }}.png"
+						 alt="{{ languages[currentLang].name }} flag" class="flag-icon">
+				<span>{{ languages[currentLang].nativeName }}</span>
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="languageDropdown">
+				<li ng-repeat="(langCode, langInfo) in languages">
+					<a class="dropdown-item d-flex align-items-center" href="#" ng-click="changeLanguage(langCode); $event.preventDefault()">
+						<img ng-src="https://flagcdn.com/24x18/{{ langInfo.flag }}.png"
+								 alt="{{ langInfo.name }} flag" class="flag-icon">
+						<span>{{ langInfo.nativeName }} ({{ langInfo.name }})</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- 유튜브 검색 섹션 -->
+	<div class="youtube-search section">
+		<div class="language-header">
+			<h3>{{ translations[currentLang].youtubeSearchTitle || 'YouTube 검색' }}</h3>
+		</div>
+
+		<div class="mb-3">
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="youtubeQuery"
+							 placeholder="{{ translations[currentLang].searchPlaceholder || '유튜브 검색어 또는 URL을 입력하세요' }}"
+							 ng-keypress="$event.keyCode == 13 && searchYoutube()">
+				<button class="btn btn-primary" type="button" ng-click="searchYoutube()">
+					{{ translations[currentLang].searchButton || '검색' }}
+				</button>
+			</div>
+			<small class="form-text text-muted">{{ translations[currentLang].searchTip || '검색어 또는 유튜브 URL을 입력하세요' }}</small>
+		</div>
+
+		<!-- 로딩 표시 -->
+		<div class="text-center my-4" ng-if="isLoading">
+			<div class="spinner-border text-primary" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+			<p class="mt-2">{{ translations[currentLang].loading || '검색 중...' }}</p>
+		</div>
+
+		<!-- 검색 결과 표시 -->
+		<div class="youtube-results mt-4" ng-if="searchResults.length > 0 && !isLoading">
+			<h4>{{ translations[currentLang].searchResults || '검색 결과' }}</h4>
+			<div class="list-group">
+				<a ng-repeat="video in searchResults"
+					 href="https://www.youtube.com/watch?v={{video.id}}"
+					 target="_blank"
+					 class="list-group-item list-group-item-action">
+					<div class="d-flex">
+						<div class="flex-shrink-0">
+							<img ng-src="{{video.thumbnail}}" alt="{{video.title}}" style="width: 120px; height: 68px;">
+						</div>
+						<div class="flex-grow-1 ms-3">
+							<h5 class="mb-1">{{video.title}}</h5>
+							<p class="mb-1 text-muted small">{{video.channelTitle}}</p>
+							<small>{{video.publishedAt | date:'yyyy-MM-dd'}}</small>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+
+		<!-- 검색 결과가 없을 경우 -->
+		<div class="alert alert-info" ng-if="searchResults.length === 0 && searchPerformed && !isLoading">
+			{{ translations[currentLang].noResults || '검색 결과가 없습니다.' }}
+		</div>
+
+		<!-- 에러 메시지 -->
+		<div class="alert alert-danger" ng-if="searchError && !isLoading">
+			{{ translations[currentLang].searchError || '검색 중 오류가 발생했습니다.' }}
+		</div>
+	</div>
+
+	<!-- 푸터 -->
+	<footer class="mt-5 pt-3 border-top text-center text-muted">
+		<p>{{ translations[currentLang].footerText }} &copy; 2024</p>
+	</footer>
+</div>
+</body>
+<script>
+	function multiLanguage($scope) {
+		$scope.languages = {
+			'en': {name: 'English', nativeName: 'English', flag: 'us'},
+			'ja': {name: 'Japanese', nativeName: '日本語', flag: 'jp'},
+			'zh': {name: 'Chinese (Simplified)', nativeName: '中文(简体)', flag: 'cn'},
+			'zh-TW': {name: 'Chinese (Traditional)', nativeName: '中文(繁體)', flag: 'tw'},
+			'es': {name: 'Spanish', nativeName: 'Español', flag: 'es'},
+			'fr': {name: 'French', nativeName: 'Français', flag: 'fr'},
+			'de': {name: 'German', nativeName: 'Deutsch', flag: 'de'},
+			'ru': {name: 'Russian', nativeName: 'Русский', flag: 'ru'},
+			'pt': {name: 'Portuguese', nativeName: 'Português', flag: 'pt'},
+			'ar': {name: 'Arabic', nativeName: 'العربية', flag: 'sa'},
+			'hi': {name: 'Hindi', nativeName: 'हिन्दी', flag: 'in'},
+			'it': {name: 'Italian', nativeName: 'Italiano', flag: 'it'},
+			'nl': {name: 'Dutch', nativeName: 'Nederlands', flag: 'nl'},
+			'sv': {name: 'Swedish', nativeName: 'Svenska', flag: 'se'},
+			'th': {name: 'Thai', nativeName: 'ไทย', flag: 'th'},
+			'tr': {name: 'Turkish', nativeName: 'Türkçe', flag: 'tr'},
+			'vi': {name: 'Vietnamese', nativeName: 'Tiếng Việt', flag: 'vn'},
+			'ko': {name: 'Korean', nativeName: '한국어', flag: 'kr'},
+		};
+
+		// 번역 데이터
+		$scope.translations = {
+			'ja': {
+				youtubeSearchTitle: 'YouTube 字幕を同時に2つ表示およびAI文脈分析',
+				searchPlaceholder: '検索語句またはYouTube URLを入力してください',
+				searchButton: '検索',
+				searchTip: '検索語句またはYouTube URLを入力してください',
+				loading: '検索中...',
+				searchResults: '検索結果',
+				noResults: '結果が見つかりませんでした。',
+				searchError: '検索中にエラーが発生しました。'
+			},
+			'zh': {
+				youtubeSearchTitle: '同时查看两个YouTube字幕并进行AI语句分析',
+				searchPlaceholder: '输入搜索词或 YouTube URL',
+				searchButton: '搜索',
+				searchTip: '输入搜索词或 YouTube URL',
+				loading: '搜索中...',
+				searchResults: '搜索结果',
+				noResults: '未找到结果。',
+				searchError: '搜索时发生错误。'
+			},
+			'es': {
+				youtubeSearchTitle: 'Ver dos subtítulos de YouTube al mismo tiempo y analizar oraciones con IA',
+				searchPlaceholder: 'Ingrese el término de búsqueda o URL de YouTube',
+				searchButton: 'Buscar',
+				searchTip: 'Ingrese el término de búsqueda o URL de YouTube',
+				loading: 'Buscando...',
+				searchResults: 'Resultados de la búsqueda',
+				noResults: 'No se encontraron resultados.',
+				searchError: 'Ocurrió un error al buscar.'
+			},
+			'fr': {
+				youtubeSearchTitle: 'Afficher deux sous-titres YouTube simultanément et analyser les phrases avec l’IA',
+				searchPlaceholder: 'Entrez un terme de recherche ou une URL YouTube',
+				searchButton: 'Rechercher',
+				searchTip: 'Entrez un terme de recherche ou une URL YouTube',
+				loading: 'Recherche en cours...',
+				searchResults: 'Résultats de recherche',
+				noResults: 'Aucun résultat trouvé.',
+				searchError: 'Une erreur s\'est produite lors de la recherche.'
+			},
+			'de': {
+				youtubeSearchTitle: 'Zwei YouTube-Untertitel gleichzeitig anzeigen und KI-Satzanalyse durchführen',
+				searchPlaceholder: 'Suchbegriff oder YouTube-URL eingeben',
+				searchButton: 'Suchen',
+				searchTip: 'Suchbegriff oder YouTube-URL eingeben',
+				loading: 'Suche läuft...',
+				searchResults: 'Suchergebnisse',
+				noResults: 'Keine Ergebnisse gefunden.',
+				searchError: 'Beim Suchen ist ein Fehler aufgetreten.'
+			},
+			'ru': {
+				youtubeSearchTitle: 'Одновременный просмотр двух субтитров YouTube и анализ предложений с помощью ИИ',
+				searchPlaceholder: 'Введите поисковый запрос или URL YouTube',
+				searchButton: 'Поиск',
+				searchTip: 'Введите поисковый запрос или URL YouTube',
+				loading: 'Поиск...',
+				searchResults: 'Результаты поиска',
+				noResults: 'Результаты не найдены.',
+				searchError: 'Произошла ошибка при поиске.'
+			},
+			'pt': {
+				youtubeSearchTitle: 'Visualizar duas legendas do YouTube ao mesmo tempo e analisar sentenças com IA',
+				searchPlaceholder: 'Insira o termo de pesquisa ou URL do YouTube',
+				searchButton: 'Pesquisar',
+				searchTip: 'Insira o termo de pesquisa ou URL do YouTube',
+				loading: 'Pesquisando...',
+				searchResults: 'Resultados da pesquisa',
+				noResults: 'Nenhum resultado encontrado.',
+				searchError: 'Ocorreu um erro durante a pesquisa.'
+			},
+			'ar': {
+				youtubeSearchTitle: 'عرض ترجمتين على YouTube في نفس الوقت وتحليل الجمل باستخدام الذكاء الاصطناعي',
+				searchPlaceholder: 'أدخل مصطلح البحث أو عنوان URL الخاص بـ YouTube',
+				searchButton: 'بحث',
+				searchTip: 'أدخل مصطلح البحث أو عنوان URL الخاص بـ YouTube',
+				loading: 'جارٍ البحث...',
+				searchResults: 'نتائج البحث',
+				noResults: 'لم يتم العثور على نتائج.',
+				searchError: 'حدث خطأ أثناء البحث.'
+			},
+			'hi': {
+				youtubeSearchTitle: 'दो YouTube उपशीर्षक एक साथ देखें और AI वाक्य विश्लेषण करें',
+				searchPlaceholder: 'खोज शब्द या YouTube URL दर्ज करें',
+				searchButton: 'खोजें',
+				searchTip: 'खोज शब्द या YouTube URL दर्ज करें',
+				loading: 'खोज हो रही है...',
+				searchResults: 'खोज परिणाम',
+				noResults: 'कोई परिणाम नहीं मिला।',
+				searchError: 'खोज के दौरान एक त्रुटि हुई।'
+			},
+			'ko': {
+				youtubeSearchTitle: 'YouTube 자막 2개 동시 보기 및 인공지능 문장 분석',
+				searchButton: '검색',
+				searchTip: '검색어 또는 유튜브 URL을 입력하세요',
+				loading: '검색 중...',
+				searchResults: '검색 결과',
+				noResults: '검색 결과가 없습니다.',
+				searchError: '검색 중 오류가 발생했습니다.'
+			},
+			'en': {
+				youtubeSearchTitle: 'View Two YouTube Subtitles Simultaneously and Analyze Sentences with AI',
+				searchPlaceholder: 'Enter search term or YouTube URL',
+				searchButton: 'Search',
+				searchTip: 'Enter search term or YouTube URL',
+				loading: 'Searching...',
+				searchResults: 'Search Results',
+				noResults: 'No results found.',
+				searchError: 'An error occurred while searching.'
+			},
+		};
+	}
+</script>
+</html>
