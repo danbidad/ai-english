@@ -245,14 +245,14 @@ export class TranscriptList {
 }
 
 export class Transcript {
-  private httpClient: AxiosInstance;
+  httpClient: AxiosInstance;
   videoId: string;
-  private url: string;
+  url: string;
   language: string;
   languageCode: string;
   isGenerated: boolean;
   translationLanguages: TranslationLanguage[];
-  private translationLanguagesDict: { [key: string]: string };
+  translationLanguagesDict: { [key: string]: string };
 
   constructor(
     httpClient: AxiosInstance,

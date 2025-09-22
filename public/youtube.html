@@ -2,364 +2,121 @@
 <html lang="ko" ng-app="youtubeApp">
 
 <head>
-	<meta charset="euc-kr">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>유튜브 자막 플레이어</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-cookies.min.js"></script>
 	<script src="https://www.youtube.com/iframe_api"></script>
 	<script src="common.js"></script>
-	<script src="youtube.js"></script>
+	<script src="youtube.html.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-	<style>
-		@media (prefers-color-scheme: dark) {
-			body {
-				background-color: #121212; /* 어두운 배경 색상 */
-				color: #e0e0e0; /* 밝은 글자 색상 */
-
-				input[type="text"],
-				.current-time,
-				.subtitle-item {
-					background-color: #1e1e1e; /* 어두운 배경 */
-					color: #e0e0e0; /* 밝은 글자 */
-					border: 1px solid #333; /* 진한 테두리 */
-				}
-
-				/* 버튼 스타일 */
-
-				button {
-					background-color: #bb86fc; /* 다크 모드에 어울리는 색상 */
-					color: #000; /* 버튼 내 텍스트 색상 */
-					border: none;
-				}
-
-				button:hover {
-					background-color: #9a67ea;
-				}
-
-				/* 비디오, 자막 오버레이 등 필요 요소 배경 조정 */
-
-				.video-container,
-				.video-wrapper,
-				.current-subtitle-overlay {
-					background-color: #121212;
-				}
-
-				/* 기타 필요한 다크 모드 스타일 */
-
-				.input-container,
-				.url-input-group {
-					/* 필요에 따라 패딩, 마진 등도 조절 */
-				}
-
-				/* 언어 선택 리스트 다크 모드 스타일 */
-
-				select {
-					background-color: #1e1e1e !important;
-					color: #e0e0e0 !important;
-					border: 1px solid #333;
-				}
-
-				/* 옵션 요소에 대한 스타일 (브라우저에 따라 필요할 수 있음) */
-
-				select option {
-					background-color: #1e1e1e;
-					color: #e0e0e0;
-				}
-			}
-		}
-	</style>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			max-width: 800px;
-			margin: 0 auto;
-			padding: 5px;
-		}
-
-		.input-container {
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-		}
-
-		.url-input-group {
-			display: flex;
-			gap: 10px;
-			align-items: center;
-		}
-
-		input[type="text"] {
-			flex: 1;
-			padding: 10px;
-			font-size: 16px;
-			border: 1px solid #ccc;
-			border-radius: 5px;
-		}
-
-		select {
-			width: 120px;
-			padding: 8px;
-			font-size: 14px;
-			border: 1px solid #ccc;
-			border-radius: 5px;
-			background-color: white;
-		}
-
-		button {
-			height: 40px;
-			padding: 10px 20px;
-			background-color: #ff0000;
-			color: white;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			font-size: 16px;
-		}
-
-		button:hover {
-			background-color: #cc0000;
-		}
-
-		.video-container {
-			margin-top: 20px;
-			text-align: center;
-		}
-
-		.video-wrapper {
-			width: 100%;
-			aspect-ratio: 16 / 9;
-		}
-
-		iframe {
-			width: 100%;
-			height: 100%;
-			border: none;
-			border-radius: 10px;
-		}
-
-		.error-message {
-			color: red;
-			margin-top: 10px;
-		}
-
-		.subtitles-container {
-			margin-top: 20px;
-			max-height: 300px;
-			overflow-y: auto;
-			border: 1px solid #ccc;
-			padding: 10px;
-			border-radius: 5px;
-		}
-
-		.subtitle-item {
-			margin-bottom: 10px;
-			padding: 5px;
-			background-color: #f5f5f5;
-			border-radius: 3px;
-		}
-
-		.subtitle-item.active {
-			color: red;
-			background-color: #ffeb3b;
-			font-weight: bold;
-		}
-
-		.subtitle-text {
-			font-size: 14px;
-		}
-
-		.subtitle-time {
-			color: #666;
-			font-size: 12px;
-		}
-
-		.player-controls {
-			margin-top: 10px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 20px;
-		}
-
-		.current-time {
-			font-size: 16px;
-			font-family: monospace;
-			background: #f5f5f5;
-			padding: 5px 10px;
-			border-radius: 5px;
-			min-width: 80px;
-		}
-
-		.video-wrapper {
-			position: relative;
-			width: 100%;
-		}
-
-		.current-subtitle-overlay {
-			position: absolute;
-			bottom: 5%;
-			left: 0;
-			right: 0;
-			z-index: 1000;
-			background-color: rgba(0, 0, 0, 0.7);
-			color: white;
-			padding: 15px;
-			text-align: center;
-			font-size: 18px;
-			font-weight: bold;
-			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-			transition: opacity 0.3s ease;
-		}
-
-		.current-subtitle-overlay.empty {
-			opacity: 0;
-		}
-
-		.word {
-			display: inline-block;
-			cursor: pointer;
-		}
-
-		.word:hover {
-			background-color: rgba(255, 255, 0, 0.3);
-		}
-
-		.word-popup {
-			position: fixed;
-			background: white;
-			border: 1px solid #ccc;
-			border-radius: 4px;
-			padding: 10px;
-			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-			z-index: 1100;
-			max-width: 300px;
-			font-size: 14px;
-			z-index: 1001;
-		}
-
-		.word-popup .meaning {
-			margin-bottom: 5px;
-		}
-
-		.word-popup .pos {
-			color: #666;
-			font-style: italic;
-		}
-
-		.subtitle-header {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 5px;
-		}
-
-		.seek-icon {
-			cursor: pointer;
-			color: #666;
-			font-size: 18px;
-			padding: 5px;
-			transition: color 0.2s ease;
-		}
-
-		.seek-icon:hover {
-			color: #ff0000;
-		}
-
-		.icon-group {
-			display: flex;
-			gap: 10px;
-			align-items: center;
-		}
-
-		.audio-loading {
-			opacity: 0.5;
-			pointer-events: none;
-		}
-
-		@keyframes spin {
-			0% {
-				transform: rotate(0deg);
-			}
-			100% {
-				transform: rotate(360deg);
-			}
-		}
-
-		.fa-spinner {
-			animation: spin 1s linear infinite;
-		}
-
-		@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
-
-		.seek-icon.speaking {
-			color: #ff0000;
-			animation: pulse 1s infinite;
-		}
-
-		@keyframes pulse {
-			0% {
-				opacity: 1;
-			}
-			50% {
-				opacity: 0.5;
-			}
-			100% {
-				opacity: 1;
-			}
-		}
-	</style>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="youtube.html.css">
 </head>
 
 <body ng-controller="YoutubeController">
-<h1>유튜브 자막 플레이어</h1>
-<div class="input-container">
-	<div class="url-input-group">
-		<select ng-model="selectedLang">
-			<option value="en">🇺🇸 English</option>
-			<option value="ja">🇯🇵 日本語</option>
+
+<!-- 패널 오버레이 -->
+<div class="dialog-overlay" onclick="closeOptionDialog()">></div>
+<!-- 패널 대화상자 -->
+<div class="dialog" id="optionDialog">
+	<div class="dialog-close" onclick="closeOptionDialog()">×</div>
+	<h3>언어 설정</h3>
+	<div class="mb-3">
+		<label for="subtitleLang1" class="form-label">자막언어1</label>
+		<select id="subtitleLang1" ng-model="subtitleLang1" class="form-select" ng-options="option.id as option.name for option in subtitleLangs">
 		</select>
-		<input type="text" ng-model="youtubeUrl" placeholder="유튜브 URL을 입력하세요..."/>
 	</div>
-	<button ng-click="loadVideo()">동영상 로드</button>
-	<div class="error-message" ng-if="errorMessage">{{ errorMessage }}</div>
-</div>
-<div class="video-container" ng-if="videoId">
-	<div class="video-wrapper">
-		<div id="player"></div>
-		<div class="current-subtitle-overlay" ng-if="currentSubtitle" ng-class="{'empty': !currentSubtitle}">
-                <span style="margin-right: 5px;" ng-repeat="word in splitWords(currentSubtitle.text) track by $index"
-											class="word"
-											ng-click="showWordMeaning($event, word)">{{ word }}</span>&nbsp;
-		</div>
+	<div class="mb-3">
+		<label for="subtitleLang2" class="form-label">자막언어2</label>
+		<select id="subtitleLang2" ng-model="subtitleLang2" class="form-select" ng-options="option.id as option.name for option in subtitleLangs">
+		</select>
 	</div>
-	<div class="player-controls">
-		<button ng-click="togglePlay()">{{ isPlaying ? '일시정지' : '재생' }}</button>
-		<div class="current-time">{{ currentTime | formatDuration }}</div>
-	</div>
-</div>
-<div class="subtitles-container" ng-if="subtitles.length">
-	<div ng-repeat="subtitle in subtitles track by $index"
-			 class="subtitle-item"
-			 ng-class="{'active': isCurrentSubtitle(subtitle)}"
-			 id="subtitle-{{$index}}">
-		<div class="subtitle-header">
-			<div class="subtitle-time">{{ formatTime(subtitle.start) }} - {{ formatTime(subtitle.dur) }}</div>
-			<div class="icon-group">
-				<i class="fas fa-volume-up seek-icon"
-					 ng-if="isSpeechSupported"
-					 ng-click="playTTS(subtitle.text, $event, $index)"
-					 title="텍스트를 음성으로 읽기"></i>
-				<i class="fas fa-play-circle seek-icon"
-					 ng-click="seekToTime(subtitle.start)"
-					 title="이 시간으로 이동"></i>
-			</div>
-		</div>
-		<div class="subtitle-text">
-			{{ subtitle.text }}
-		</div>
-	</div>
+	<button class="btn btn-success mt-3" ng-click="saveOptions()">저장</button>
 </div>
 
+<div id="page">
+	{{ subtitleLang1 }}
+	<div id="panel1">
+		<div class="video-container">
+			<div class="video-wrapper">
+				<div id="player"></div>
+				<div class="current-subtitle-overlay" ng-if="subtitle1" ng-class="{'empty': !subtitle1}">
+                <span style="margin-right: 5px;" ng-repeat="word in splitWords(subtitle1.text) track by $index"
+											class="word"
+											ng-click="showWordMeaning($event, word)">{{ word }}</span>&nbsp;
+				</div>
+			</div>
+		</div>
+
+		<div class="subtitles-container" ng-if="subtitles1 && subtitles1.length">
+			<div ng-repeat="subtitle in subtitles1 track by $index"
+					 class="subtitle-item"
+					 ng-class="{'active': isCurrentSubtitle(subtitle)}"
+					 id="subtitle-{{$index}}">
+				<div class="subtitle-header">
+					<div class="subtitle-time">{{ formatTime(subtitle.start) }} - {{ formatTime(subtitle.dur) }}</div>
+					<div class="icon-group">
+						<i class="fas fa-volume-up seek-icon"
+							 ng-if="isSpeechSupported"
+							 ng-click="playTTS(subtitle.text, $event, $index)"
+							 title="텍스트를 음성으로 읽기"></i>
+						<i class="fas fa-play-circle seek-icon"
+							 ng-click="seekToTime(subtitle.start)"
+							 title="이 시간으로 이동"></i>
+					</div>
+				</div>
+				<div class="subtitle-text">
+					{{ subtitle.text }}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="panel2">
+		<div class="subtitles-container2" ng-if="subtitles2 && subtitles2.length">
+			<div ng-repeat="subtitle in subtitles2 track by $index"
+					 class="subtitle-item"
+					 ng-class="{'active': isCurrentSubtitle(subtitle)}"
+					 id="subtitle-{{$index}}">
+				<div class="subtitle-header">
+					<div class="subtitle-time">{{ formatTime(subtitle.start) }} - {{ formatTime(subtitle.dur) }}</div>
+					<div class="icon-group">
+						<i class="fas fa-volume-up seek-icon"
+							 ng-if="isSpeechSupported"
+							 ng-click="playTTS(subtitle.text, $event, $index)"
+							 title="텍스트를 음성으로 읽기"></i>
+						<i class="fas fa-play-circle seek-icon"
+							 ng-click="seekToTime(subtitle.start)"
+							 title="이 시간으로 이동"></i>
+					</div>
+				</div>
+				<div class="subtitle-text">
+					{{ subtitle.text }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="controlBar">
+		<div class="current-time">{{ currentTime | formatDuration }}</div>
+		<div class="control-button">
+			<i class="bi bi-skip-backward-fill"></i>
+		</div>
+		<div class="control-button" ng-click="togglePlay()">
+			<i class="bi bi-play-fill" ng-show="!isPlaying"></i>
+			<i class="bi bi-stop-fill" ng-show="isPlaying"></i>
+		</div>
+		<div class="control-button">
+			<i class="bi bi-skip-forward-fill"></i>
+		</div>
+		<div class="control-button">
+			<i class="bi bi-arrow-clockwise"></i>
+		</div>
+		<div class="control-button" onclick="openOptionDialog()">
+			<i class="bi bi-gear"></i>
+		</div>
+	</div>
+</div>
 <div class="word-popup" ng-if="selectedWord" ng-style="popupStyle" ng-if="wordMeanings">
 	<div class="meaning" ng-repeat="meaning in wordMeanings">
 		<span class="pos">{{ meaning.pos }}.</span> {{ meaning.definitions[0].definition }}
@@ -369,14 +126,23 @@
 
 </html>
 
+<script>
+	// 요소 가져오기
+	const dialog = document.getElementById('optionDialog');
+	const dialogOverlay = document.getElementsByClassName('dialog-overlay');
+	const saveOptionsBtn = document.getElementById('saveOptionsBtn');
 
+	// 패널 열기
+	function openOptionDialog() {
+		dialog.style.display = 'block';
+		dialogOverlay[0].style.display = 'block';
+	};
 
-
-
-
-
-
-
-
-
-
+	// 패널 닫기 함수
+	function closeOptionDialog() {
+		dialog.style.display = 'none';
+		dialogOverlay[0].style.display = 'none';
+	}
+</script>
+<style>
+</style>

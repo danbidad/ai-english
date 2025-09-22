@@ -1,0 +1,81 @@
+분석내용을 정리해서 아래에서 설명하는 포맷의 json 타입으로 출력해줘
+
+오늘의 주요 뉴스를 참고해서 영어문장을 하나 생성하고
+문장의 문법적 구조를 분석해서 아래에서 설명하는 포맷의 json 타입으로 출력해줘
+{
+  "text": "문장이나 절 전체",
+  "translation": "번역"
+  "svoc_analysis": {
+    "subject": "주어부에 해당하는 텍스트",
+      "subject_translation": "주어부 번역",
+    "verb": "동사에 해당하는 텍스트",
+      "verb_translation": "동사 번역",
+      "verb_comment": "동사에 관한 부가적인 설명"
+    "obj": "목적어에 해당하는 텍스트",
+      "obj_translation": "목적어 번역",
+    "indirect_object": "간접목적어에 해당하는 텍스트",
+      "indirect_obj_translation": "간접목적어 번역",
+    "objc": "목적보어에 해당하는 텍스트",
+      "objc_translation": "목적보어 번역",
+  },
+  "phrases": [ {
+      "text": "구에 해당되는 텍스트",
+      "translation": "번역",
+      "type": "구의 종류, 명사구 형용사구 부사구 동사구 부정사구 동명사구 분사구 전치사구의 하나",
+      "role": "문법적 역할",
+      "relation": "이 phrase가 문장의 다른 요소를 형용사나 부사로써 수식할때 수식을 받는 쪽에 대한 설명"
+  },
+  ],
+  "sub_clauses" : [ {
+    "text": "절 전체의 텍스트",
+    "translation": "번역",
+    "type": "절의 종류, 명사절 형용사절 부사절 등위절 종속절중의 하나",
+    "role": "문법적 역할",
+    "relation": "만약 이 절이 형용사 절이라면 어떤 명사/명사구/명사절을 수식하는지 그리고 부사절이라면 어떤 동사/동사구를 수식하는지 설명"
+    "svoc_analysis": {
+      "subject": "주어부에 해당하는 텍스트",
+      "subject_translation": "주어부 번역",
+      "verb": "동사에 해당하는 텍스트",
+      "verb_translation": "동사부 번역",
+      "verb_comment": "동사에 관한 부가적인 설명"
+      "obj": "목적어에 해당하는 텍스트",
+      "obj_translation": "목적어 번역",
+      "indirect_obj": "간접목적어에 해당하는 텍스트",
+      "indirect_obj_translation": "간접목적어 번역",
+      "objc": "목적보어에 해당하는 텍스트",
+      "objc_translation": "목적보어 번역",
+    }
+    }
+  ]
+}
+
+
+
+
+
+Although you may put off going to sleep in order to squeeze more activities into your day, eventually your need for sleep becomes overwhelming and you are forced to get some sleep.
+주어진 영어문장을 앞에서 부터 뒤로 순차적으로 단어 단위로 쪼개서
+단어들이 순서대로 등장할때마다 문장의 해석내용이 어떻게 바뀌고 현재가 어떤 상태이며
+앞으로 무엇이 예측되는지를 설명하시오
+아래에서 설명하는 json 포맷으로 출력하시오.
+다만 [명사의 연속], 또는 [동사와 전치사]처럼 하나의 단위로 읽는 것이 쉬운 경우에는 쪼개지 말고 블럭으로 남겨두시오.
+
+
+Although you may put off going to sleep in order to squeeze more activities into your day, eventually your need for sleep becomes overwhelming and you are forced to get some sleep.
+
+주어진 영어문장을 앞에서 부터 뒤로 순차적으로 단어 단위로 쪼개시오.
+다만 하나의 단위로 읽는 것이 쉬운 경우에는 쪼개지 말고 블럭으로 남겨두시오.
+쉼표와 같은 문장부호는 없애거나 단독으로 남기지 말고 앞의 텍스트 블록 끝에 붙여서 남겨두시오.
+그리고 쪼갠 블럭들이 순서대로 등장할때마다 문장의 전체 해석내용이 어떻게 바뀌고
+현재가 어떤 상태이며
+앞으로 무엇이 예측되는지를 설명하시오
+아래에서 설명하는 json 포맷으로 출력하시오.
+
+[ {
+"text_block": "텍스트 블럭",
+"block_translation": "텍스트 블럭의 번역",
+"blocks_translation": "현재까지 공개된 텍스트 블럭들만 번역",
+"state": "현재 문법적으로 어떤 상태인지 설명",
+"predict_state": "앞으로 무엇이 예측되는지 설명"
+},
+]

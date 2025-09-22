@@ -1,0 +1,57 @@
+
+
+@media (prefers-color-scheme: dark) {
+
+}
+
+body.darkmode {
+    background-color: #121212; /* 어두운 배경 색상 */
+    color: #e0e0e0; /* 밝은 글자 색상 */
+
+    /* 버튼 스타일 */
+    button {
+        background-color: #bb86fc; /* 다크 모드에 어울리는 색상 */
+        color: #000; /* 버튼 내 텍스트 색상 */
+        border: none;
+    }
+
+    button:hover {
+        background-color: #9a67ea;
+    }
+
+    /* 언어 선택 리스트 다크 모드 스타일 */
+    select {
+        background-color: #1e1e1e !important;
+        color: #e0e0e0 !important;
+        border: 1px solid #333;
+    }
+
+    /* 옵션 요소에 대한 스타일 (브라우저에 따라 필요할 수 있음) */
+
+    select option {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+    }
+
+    input[type="text"],
+    .current-time,
+    .subtitle-item {
+        background-color: #1e1e1e; /* 어두운 배경 */
+        color: #e0e0e0; /* 밝은 글자 */
+        border: 1px solid #333; /* 진한 테두리 */
+    }
+
+    /* 비디오, 자막 오버레이 등 필요 요소 배경 조정 */
+    .video-container,
+    .video-wrapper,
+    .current-subtitle-overlay {
+        background-color: #121212;
+    }
+
+    /* 기타 필요한 다크 모드 스타일 */
+
+    .input-container,
+    .url-input-group {
+        /* 필요에 따라 패딩, 마진 등도 조절 */
+    }
+}

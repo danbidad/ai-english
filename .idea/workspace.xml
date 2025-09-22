@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="73d49ff5-ff5a-4348-8d93-b0e703a33e55" name="변경" comment="시작">
+      <change afterPath="$PROJECT_DIR$/.aiignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/common.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/darkmode.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/dialog.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/protocol.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/youtube.html.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/youtube_loader.html.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/proxy.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/tokenizer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/utils/youtube_script.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todo.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ai-test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ai-test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/youtube.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/youtube.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube.html.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/youtube_loader.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube_loader.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/youtube_loader.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube_loader.html.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/transcript/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/test/youtube_transcript_fetcher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/transcript/test/youtube_transcript_fetcher.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/transcripts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/transcript/transcripts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/youtube.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/youtube.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="SciaReto Mind Map" />
+        <option value="CSS File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2qtdjoUeQCoeKR1uH5VRTD1ACRn" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Jest.YouTubeTranscriptApi.getTranscript.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.YouTubeTranscriptApi.listTranscripts.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.YouTubeTranscriptApi.listTranscripts.비디오 ID로 자막 목록을 가져와야 함.executor&quot;: &quot;Debug&quot;,
+    &quot;Jest.__tests__/ 내 테스트.executor&quot;: &quot;Run&quot;,
+    &quot;Jest.transcript/ 내 테스트.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.tokenizer.ts.executor&quot;: &quot;Debug&quot;,
+    &quot;Node.js.youtube_transcript_fetcher.ts.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/PhpstormProjects/ai-test&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;F:/PhpstormProjects/ai-test/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.build.executor&quot;: &quot;Debug&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.jest.executor&quot;: &quot;Run&quot;,
+    &quot;npm.start (1).executor&quot;: &quot;Run&quot;,
+    &quot;npm.start (2).executor&quot;: &quot;Run&quot;,
+    &quot;npm.start (3).executor&quot;: &quot;Run&quot;,
+    &quot;npm.start.executor&quot;: &quot;Run&quot;,
+    &quot;npm.test.executor&quot;: &quot;Run&quot;,
+    &quot;npm.test.js.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;E:\\PhpstormProjects\\ai-test\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\PhpstormProjects\ai-test" />
+      <recent name="F:\PhpstormProjects\ai-test\public" />
+      <recent name="E:\PhpstormProjects\ai-test\src\transcript" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/css" />
+      <recent name="F:\PhpstormProjects\ai-test" />
+      <recent name="F:\PhpstormProjects\ai-test\server" />
+      <recent name="F:\PhpstormProjects\ai-test\server\test" />
+      <recent name="F:\PhpstormProjects\ai-test\src" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="F:\PhpstormProjects\ai-test\src\tts.ts" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="tokenizer.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/tokenizer.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/server">
+      <method v="2" />
+    </configuration>
+    <configuration name="youtube_transcript_fetcher.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/transcript/test/youtube_transcript_fetcher.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/server/transcript/test">
+      <method v="2" />
+    </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="Node.js.youtube_transcript_fetcher.ts" />
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="Node.js.tokenizer.ts" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-PS-252.25557.128" />
+        <option value="bundled-php-predefined-a98d8de5180a-ce40d0652d34-com.jetbrains.php.sharedIndexes-PS-252.25557.128" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="73d49ff5-ff5a-4348-8d93-b0e703a33e55" name="변경" comment="" />
+      <created>1735485943058</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1735485943058</updated>
+      <workItem from="1735485944232" duration="7138000" />
+      <workItem from="1735519102312" duration="4090000" />
+      <workItem from="1735540217643" duration="22602000" />
+      <workItem from="1735610619610" duration="2085000" />
+      <workItem from="1735629429865" duration="4525000" />
+      <workItem from="1735645782950" duration="6011000" />
+      <workItem from="1735687350857" duration="2878000" />
+      <workItem from="1735731852248" duration="6780000" />
+      <workItem from="1735775708996" duration="2345000" />
+      <workItem from="1735791314157" duration="19807000" />
+      <workItem from="1735909913788" duration="607000" />
+      <workItem from="1736047243987" duration="9347000" />
+      <workItem from="1736131811196" duration="5077000" />
+      <workItem from="1736146674963" duration="2586000" />
+      <workItem from="1736161206584" duration="4550000" />
+      <workItem from="1736256463060" duration="259000" />
+      <workItem from="1736267104668" duration="13000" />
+      <workItem from="1736267125562" duration="738000" />
+      <workItem from="1736267893492" duration="676000" />
+      <workItem from="1736351836829" duration="3828000" />
+      <workItem from="1736432327141" duration="6043000" />
+      <workItem from="1736484148786" duration="978000" />
+      <workItem from="1736510587782" duration="1286000" />
+      <workItem from="1736609039999" duration="10005000" />
+      <workItem from="1736730709808" duration="2332000" />
+      <workItem from="1736745164499" duration="12294000" />
+      <workItem from="1736823525754" duration="3260000" />
+      <workItem from="1736837769756" duration="8583000" />
+      <workItem from="1736870814004" duration="565000" />
+      <workItem from="1736915053171" duration="23480000" />
+      <workItem from="1737519981805" duration="3831000" />
+      <workItem from="1737562715922" duration="21161000" />
+      <workItem from="1738416950176" duration="14885000" />
+      <workItem from="1738740922722" duration="602000" />
+      <workItem from="1738974500244" duration="768000" />
+      <workItem from="1738976646791" duration="157000" />
+      <workItem from="1738976827815" duration="169000" />
+      <workItem from="1739012572020" duration="828000" />
+      <workItem from="1739020335843" duration="3453000" />
+      <workItem from="1739078785530" duration="11347000" />
+      <workItem from="1739124078001" duration="111000" />
+      <workItem from="1739150337961" duration="1442000" />
+      <workItem from="1739157196731" duration="2000" />
+      <workItem from="1739270287768" duration="282000" />
+      <workItem from="1739270577685" duration="711000" />
+      <workItem from="1739365829216" duration="760000" />
+      <workItem from="1739369483265" duration="4000" />
+      <workItem from="1739369562616" duration="571000" />
+      <workItem from="1739444606632" duration="891000" />
+      <workItem from="1739445511063" duration="3986000" />
+      <workItem from="1739455694424" duration="327000" />
+      <workItem from="1739456136499" duration="185000" />
+      <workItem from="1739456328993" duration="48000" />
+      <workItem from="1739519982706" duration="130000" />
+      <workItem from="1739520127151" duration="10000" />
+      <workItem from="1739520140648" duration="1463000" />
+      <workItem from="1739533764026" duration="2290000" />
+      <workItem from="1739605199304" duration="1198000" />
+      <workItem from="1739608220770" duration="646000" />
+      <workItem from="1739866477415" duration="134000" />
+      <workItem from="1739866627218" duration="31000" />
+      <workItem from="1739869599155" duration="2429000" />
+      <workItem from="1740384137656" duration="2707000" />
+      <workItem from="1740387904047" duration="21000" />
+      <workItem from="1740387942894" duration="1017000" />
+      <workItem from="1740903230113" duration="1422000" />
+      <workItem from="1740916149131" duration="908000" />
+      <workItem from="1740988982265" duration="6134000" />
+      <workItem from="1741051299644" duration="6823000" />
+      <workItem from="1741252257061" duration="19000" />
+      <workItem from="1741252287446" duration="674000" />
+      <workItem from="1741572090244" duration="3620000" />
+      <workItem from="1741779522668" duration="191000" />
+      <workItem from="1741795562409" duration="245000" />
+      <workItem from="1741796813537" duration="9000" />
+      <workItem from="1741796839070" duration="417000" />
+      <workItem from="1741797354867" duration="112000" />
+      <workItem from="1741797482117" duration="203000" />
+      <workItem from="1741847623364" duration="21000" />
+      <workItem from="1741847654690" duration="59000" />
+      <workItem from="1741847725175" duration="172000" />
+      <workItem from="1741847907009" duration="158000" />
+      <workItem from="1741848692336" duration="99000" />
+      <workItem from="1741848809515" duration="189000" />
+      <workItem from="1741849006833" duration="361000" />
+      <workItem from="1741849386882" duration="33000" />
+      <workItem from="1741849436011" duration="368000" />
+      <workItem from="1741849826901" duration="19000" />
+      <workItem from="1741849853579" duration="1249000" />
+      <workItem from="1741851436995" duration="44000" />
+      <workItem from="1741851503221" duration="11000" />
+      <workItem from="1741851530488" duration="218000" />
+      <workItem from="1741852577119" duration="88000" />
+      <workItem from="1741852708334" duration="60000" />
+      <workItem from="1741854492532" duration="3332000" />
+      <workItem from="1741864291406" duration="601000" />
+      <workItem from="1741925080905" duration="12849000" />
+      <workItem from="1742199757206" duration="645000" />
+      <workItem from="1742272672441" duration="36000" />
+      <workItem from="1742272724239" duration="657000" />
+      <workItem from="1742280363412" duration="777000" />
+      <workItem from="1742756372608" duration="13000" />
+      <workItem from="1742756397480" duration="1244000" />
+      <workItem from="1742890916645" duration="1716000" />
+      <workItem from="1742907225235" duration="189000" />
+      <workItem from="1743064823782" duration="3446000" />
+      <workItem from="1743075762657" duration="3269000" />
+      <workItem from="1743139516590" duration="11229000" />
+      <workItem from="1743222003322" duration="5187000" />
+      <workItem from="1743234224319" duration="741000" />
+      <workItem from="1744319331120" duration="1453000" />
+      <workItem from="1744618894549" duration="2370000" />
+      <workItem from="1744625977919" duration="2621000" />
+      <workItem from="1744721606340" duration="1761000" />
+      <workItem from="1744781392901" duration="1835000" />
+      <workItem from="1744791372477" duration="10556000" />
+      <workItem from="1744860596548" duration="5891000" />
+      <workItem from="1744886373967" duration="2105000" />
+      <workItem from="1744888837567" duration="9093000" />
+      <workItem from="1744950649918" duration="39000" />
+      <workItem from="1744993530972" duration="3036000" />
+      <workItem from="1745025788842" duration="381000" />
+      <workItem from="1745029212962" duration="3886000" />
+      <workItem from="1745051701512" duration="3476000" />
+      <workItem from="1745148564899" duration="4786000" />
+      <workItem from="1745309086770" duration="10849000" />
+      <workItem from="1745385478509" duration="5233000" />
+      <workItem from="1745399739500" duration="7089000" />
+      <workItem from="1745459636090" duration="2436000" />
+      <workItem from="1745493530982" duration="841000" />
+      <workItem from="1745507761658" duration="2759000" />
+      <workItem from="1745555073344" duration="2380000" />
+      <workItem from="1745657391573" duration="118000" />
+      <workItem from="1745657539871" duration="360000" />
+      <workItem from="1745657909745" duration="957000" />
+      <workItem from="1745669958852" duration="1915000" />
+      <workItem from="1745677286719" duration="209000" />
+      <workItem from="1745677514958" duration="2231000" />
+      <workItem from="1745683669992" duration="1607000" />
+      <workItem from="1745728337503" duration="1710000" />
+      <workItem from="1745756002664" duration="2161000" />
+      <workItem from="1745815899807" duration="10960000" />
+      <workItem from="1745941739489" duration="54000" />
+      <workItem from="1746001354531" duration="4448000" />
+      <workItem from="1746024738828" duration="47000" />
+      <workItem from="1746024795276" duration="928000" />
+      <workItem from="1746025756539" duration="809000" />
+      <workItem from="1746101876522" duration="1966000" />
+      <workItem from="1746165199469" duration="3592000" />
+      <workItem from="1746795893656" duration="732000" />
+      <workItem from="1746796637799" duration="273000" />
+      <workItem from="1746979716486" duration="957000" />
+      <workItem from="1747016043326" duration="391000" />
+      <workItem from="1747016479137" duration="5074000" />
+      <workItem from="1747210915370" duration="4702000" />
+      <workItem from="1747294942104" duration="9261000" />
+      <workItem from="1747642203821" duration="10183000" />
+      <workItem from="1747703036781" duration="11255000" />
+      <workItem from="1747750311173" duration="1171000" />
+      <workItem from="1747752478881" duration="62000" />
+      <workItem from="1747789735430" duration="3192000" />
+      <workItem from="1747835766392" duration="2286000" />
+      <workItem from="1747877529920" duration="2563000" />
+      <workItem from="1747891008411" duration="45026000" />
+      <workItem from="1748574765342" duration="2601000" />
+      <workItem from="1748579954893" duration="147000" />
+      <workItem from="1748580285321" duration="455000" />
+      <workItem from="1748580760883" duration="1330000" />
+      <workItem from="1748586850976" duration="2980000" />
+      <workItem from="1748616704504" duration="1285000" />
+      <workItem from="1748769404304" duration="2800000" />
+      <workItem from="1748792435753" duration="486000" />
+      <workItem from="1748852090276" duration="3731000" />
+      <workItem from="1749030887509" duration="21850000" />
+      <workItem from="1749189366433" duration="283000" />
+      <workItem from="1749190502731" duration="14538000" />
+      <workItem from="1749255934870" duration="618000" />
+      <workItem from="1749289239889" duration="2875000" />
+      <workItem from="1749297289098" duration="19066000" />
+      <workItem from="1749392449776" duration="426000" />
+      <workItem from="1749418175084" duration="1221000" />
+      <workItem from="1749437357251" duration="2000" />
+      <workItem from="1749437388833" duration="931000" />
+      <workItem from="1749438551153" duration="47000" />
+      <workItem from="1749463833190" duration="11404000" />
+      <workItem from="1749518908812" duration="278000" />
+      <workItem from="1749519251063" duration="5457000" />
+      <workItem from="1749527843541" duration="1807000" />
+      <workItem from="1749885039797" duration="19000" />
+      <workItem from="1752496193094" duration="863000" />
+      <workItem from="1754291350268" duration="9000" />
+      <workItem from="1756796528245" duration="1308000" />
+      <workItem from="1756815882462" duration="71000" />
+      <workItem from="1756816228373" duration="608000" />
+      <workItem from="1756871581509" duration="780000" />
+      <workItem from="1756872583683" duration="604000" />
+      <workItem from="1756874160797" duration="169000" />
+      <workItem from="1757171488424" duration="504000" />
+      <workItem from="1758029297350" duration="50000" />
+      <workItem from="1758071577473" duration="978000" />
+      <workItem from="1758166059185" duration="1396000" />
+      <workItem from="1758169783299" duration="6431000" />
+    </task>
+    <task id="LOCAL-00001" summary="시작">
+      <option name="closed" value="true" />
+      <created>1745312780292</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745312780292</updated>
+    </task>
+    <task id="LOCAL-00002" summary="시작">
+      <option name="closed" value="true" />
+      <created>1745313824196</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1745313824196</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/server/test/test.js" />
+        <option value="$PROJECT_DIR$/server/utils/filename.js" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="시작" />
+    <option name="LAST_COMMIT_MESSAGE" value="시작" />
+  </component>
+  <component name="VueSettings">
+    <option name="innerServiceType" value="DISABLED" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/server/transcript/transcripts.ts</url>
+          <line>279</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/server/youtube.ts</url>
+          <line>117</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

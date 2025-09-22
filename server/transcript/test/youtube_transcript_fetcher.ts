@@ -24,7 +24,7 @@ async function getYoutubeTranscript(videoId: string, languageCode: string = 'ko'
 async function main() {
   try {
     // 테스트할 유튜브 비디오 ID 설정
-    const videoId = 'dQw4w9WgXcQ'; // 예: 'dQw4w9WgXcQ'
+    const videoId = '8qbHNPsXnf0'; // 예: 'dQw4w9WgXcQ'
     
     console.log(`비디오 ID ${videoId}의 자막을 가져오는 중...`);
     
@@ -38,7 +38,7 @@ async function main() {
     // 2. 한국어 자막 가져오기 시도
     try {
       const koreanTranscript = await getYoutubeTranscript(videoId, 'ko');
-      console.log('\n한국어 자막:');
+      console.log('\n한국어 자막:', koreanTranscript);
       koreanTranscript.slice(0, 5).forEach((item, index) => {
         console.log(`${index + 1}. [${item.start}s-${item.start + item.duration}s]: ${item.text}`);
       });

@@ -1,0 +1,76 @@
+@import url('css/common.css');
+
+body {
+    padding: 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.language-selector {
+    margin-bottom: 30px;
+}
+
+.flag-icon {
+    width: 24px;
+    height: 18px;
+    margin-right: 10px;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+}
+
+.language-btn {
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 8px 12px;
+}
+
+.section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+
+.current-language {
+    background-color: #f0f8ff;
+    border-left: 4px solid #007bff;
+    font-weight: bold;
+}
+
+.language-header {
+    padding: 10px 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+/* 드롭다운 관련 추가 스타일 */
+.dropdown-toggle {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.dropdown-menu {
+    width: 100%;
+}
+
+.dropdown-item {
+    padding: 8px 16px;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f8ff;
+}
+
+.dropdown-item.active {
+    background-color: #f0f8ff;
+    color: #000;
+    font-weight: bold;
+}
