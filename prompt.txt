@@ -73,9 +73,10 @@ Although you may put off going to sleep in order to squeeze more activities into
 
 [ {
 "text_block": "텍스트 블럭",
-"block_translation": "텍스트 블럭의 번역",
-"blocks_translation": "현재까지 공개된 텍스트 블럭들만 번역",
+"block_translation": "이 텍스트 블럭의 번역",
+"blocks_translation": "현재까지 공개된 텍스트 블럭들만 가지고 문장으로써 번역",
 "state": "현재 문법적으로 어떤 상태인지 설명",
-"predict_state": "앞으로 무엇이 예측되는지 설명"
+"predict_state": "앞으로 문법적으로 무엇이 예측되는지 설명",
+"predict_state2": "앞으로 어떤 내용이 이어질지 예측",
 },
 ]

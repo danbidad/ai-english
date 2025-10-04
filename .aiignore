@@ -5,6 +5,11 @@
 .DS_Store
 *.log
 *.tmp
+._*
+.venv
+.cache
+.idea
+.aiassistant
 
 # or folders
 dist/

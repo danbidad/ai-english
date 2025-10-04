@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="sentenceApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문장 분석</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 960px; margin: 0 auto; padding: 20px; }
+    h1 { margin-bottom: 16px; }
+    .row { display: flex; gap: 12px; align-items: stretch; }
+    textarea { width: 100%; min-height: 120px; padding: 10px; font-size: 14px; }
+    .controls { display: flex; gap: 8px; align-items: center; margin: 10px 0 20px; }
+    button { padding: 10px 16px; background: #2196f3; color: #fff; border: 0; border-radius: 6px; cursor: pointer; }
+    button[disabled] { opacity: 0.6; cursor: not-allowed; }
+    .error { color: #d32f2f; margin: 8px 0; }
+    .info { color: #555; font-size: 12px; }
+    .result { background: #f7f7f9; padding: 14px; border-radius: 8px; border: 1px solid #e0e0e0; }
+    .block { background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px; margin: 10px 0; }
+    .block-header { font-weight: bold; color: #333; margin-bottom: 6px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; white-space: pre-wrap; }
+    .label { display: inline-block; font-size: 12px; color: #666; margin-right: 6px; }
+
+    .sentence-display {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .sentence-text {
+      letter-spacing: 0.5px;
+    }
+    .revealed { color: #000; }
+    .hidden {
+      color: transparent;
+      text-shadow: 0 0 8px rgba(0,0,0,0.5);
+      user-select: none;
+    }
+    .navigation {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .nav-button {
+      padding: 12px 24px;
+      background: #4caf50;
+      color: #fff;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .nav-button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .progress-info {
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    .current-block {
+      background: #e8f5e9;
+      border: 2px solid #4caf50;
+    }
+    .current-text-block {
+      border-bottom: 2px solid red;
+      padding-bottom: 2px;
+    }
+    .block-wrapper {
+      display: inline-block;
+      position: relative;
+      vertical-align: top;
+    }
+    .block-translation {
+			color: red;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      font-size: 0.7em;
+      /* color: #666; */
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body ng-controller="SentenceController">
+  <h1>문장 분석</h1>
+
+  <div class="row">
+    <textarea ng-model="text" placeholder="영어 문장을 입력하고 분석 버튼을 누르세요."></textarea>
+  </div>
+
+  <div class="controls">
+    <button ng-click="analyze()" ng-disabled="loading || !text || !text.trim()">분석</button>
+    <span class="info" ng-if="!loading">/sentence/analysis API에 요청합니다.</span>
+    <span ng-if="loading">요청 중입니다...</span>
+  </div>
+
+  <div class="error" ng-if="error">{{ error }}</div>
+
+  <div class="result" ng-if="rawResponse && !parsedBlocks">
+    <div class="label">원문 응답</div>
+    <div class="mono">{{ rawResponse }}</div>
+  </div>
+
+  <div ng-if="parsedBlocks && parsedBlocks.length">
+    <h3>문장 학습</h3>
+
+		{{ parsedBlocks[currentIndex - 1].blocks_translation }}
+
+    <!-- 문장 표시 영역 -->
+    <div class="sentence-display">
+      <div class="sentence-text">
+        <span class="block-wrapper" ng-repeat="b in parsedBlocks track by $index">
+          <span ng-class="{
+                  'revealed': $index < currentIndex,
+                  'hidden': $index >= currentIndex,
+                  'current-text-block': $index === currentIndex - 1 && currentIndex > 0
+                }">{{ b.text_block }}</span><span ng-if="$index < parsedBlocks.length - 1">&nbsp;</span>
+          <span class="block-translation" ng-if="$index === currentIndex - 1 && currentIndex > 0">
+            {{ b.block_translation }}
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <!-- 네비게이션 -->
+    <div class="navigation">
+      <button class="nav-button"
+              ng-click="prevBlock()"
+              ng-disabled="currentIndex <= 0">
+        ← 이전
+      </button>
+      <div class="progress-info">{{ currentIndex }} / {{ parsedBlocks.length }}</div>
+      <button class="nav-button"
+              ng-click="nextBlock()"
+              ng-disabled="currentIndex >= parsedBlocks.length">
+        다음 →
+      </button>
+    </div>
+
+    <!-- 현재 블록 분석 정보 -->
+    <div class="block current-block" ng-if="currentIndex > 0 && currentIndex <= parsedBlocks.length">
+      <div><span class="label">현재 상태</span>{{ parsedBlocks[currentIndex - 1].state }}</div>
+      <div><span class="label">예측(문법)</span>{{ parsedBlocks[currentIndex - 1].predict_state }}</div>
+      <div><span class="label">예측(내용)</span>{{ parsedBlocks[currentIndex - 1].predict_state2 }}</div>
+    </div>
+
+  </div>
+
+  <script>
+    (function(){
+      angular.module('sentenceApp', [])
+        .controller('SentenceController', ['$scope', '$http', function($scope, $http){
+          $scope.text = '';
+          $scope.loading = false;
+          $scope.error = '';
+          $scope.rawResponse = '';
+          $scope.parsedBlocks = null;
+          $scope.currentIndex = 0;
+
+          function tryParseJson(maybeJson){
+            if(typeof maybeJson !== 'string'){ return null; }
+
+            // Handle markdown code fence format (```json ... ```)
+            var jsonMatch = maybeJson.match(/```json\s*([\s\S]*?)\s*```/);
+            if (jsonMatch) {
+              try {
+                var parsed = JSON.parse(jsonMatch[1].trim());
+                if (Array.isArray(parsed)) return parsed;
+              } catch(e) {}
+            }
+
+            // Handle direct JSON string starting with ```json
+            if (maybeJson.startsWith('```json')) {
+              var jsonContent = maybeJson.substring(7); // Remove '```json'
+              jsonContent = jsonContent.replace(/```$/, ''); // Remove trailing ```
+              try {
+                var parsed = JSON.parse(jsonContent.trim());
+                if (Array.isArray(parsed)) return parsed;
+              } catch(e) {}
+            }
+
+            try {
+              var parsed = JSON.parse(maybeJson);
+              if (Array.isArray(parsed)) return parsed;
+              // Some models may wrap with code fences or prepend text, attempt to extract JSON array
+              var m = maybeJson.match(/\[\s*\{[\s\S]*\}\s*\]/);
+              if (m) {
+                var p2 = JSON.parse(m[0]);
+                if (Array.isArray(p2)) return p2;
+              }
+            } catch(e) {}
+            return null;
+          }
+
+          $scope.analyze = function(){
+            $scope.error = '';
+            $scope.rawResponse = '';
+            $scope.parsedBlocks = null;
+            $scope.currentIndex = 0;
+            var text = ($scope.text || '').trim();
+            if(!text) { return; }
+            $scope.loading = true;
+
+            $http.post('/sentence/analysis', { text: text })
+              .then(function(res){
+                var data = res && res.data ? res.data : {};
+                var content = data.response;
+                // Save raw for visibility
+                if (typeof content === 'string') {
+                  $scope.rawResponse = content;
+                } else {
+                  try { $scope.rawResponse = JSON.stringify(content, null, 2); } catch(_) {}
+                }
+                // Try to parse JSON array
+                var blocks = tryParseJson(content);
+                if (blocks && Array.isArray(blocks)) {
+                  $scope.parsedBlocks = blocks;
+                  $scope.currentIndex = 0;
+                }
+              })
+              .catch(function(err){
+                console.error('Error:', err);
+                $scope.error = '오류가 발생했습니다. 다시 시도해주세요.';
+              })
+              .finally(function(){
+                $scope.loading = false;
+              });
+          };
+
+          $scope.nextBlock = function(){
+            if ($scope.currentIndex < $scope.parsedBlocks.length) {
+              $scope.currentIndex++;
+            }
+          };
+
+          $scope.prevBlock = function(){
+            if ($scope.currentIndex > 0) {
+              $scope.currentIndex--;
+            }
+          };
+        }]);
+    })();
+  </script>
+</body>
+</html>

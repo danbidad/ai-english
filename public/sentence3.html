@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>문장 분석</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios@1.7.7/dist/axios.min.js"></script>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			max-width: 960px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		h1 {
+			margin-bottom: 16px;
+		}
+
+		.row {
+			display: flex;
+			gap: 12px;
+			align-items: stretch;
+		}
+
+		textarea {
+			width: 100%;
+			min-height: 120px;
+			padding: 10px;
+			font-size: 14px;
+		}
+
+		.controls {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+			margin: 10px 0 20px;
+		}
+
+		button {
+			padding: 10px 16px;
+			background: #2196f3;
+			color: #fff;
+			border: 0;
+			border-radius: 6px;
+			cursor: pointer;
+		}
+
+		button[disabled] {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+
+		.error {
+			color: #d32f2f;
+			margin: 8px 0;
+		}
+
+		.info {
+			color: #555;
+			font-size: 12px;
+		}
+
+		.result {
+			background: #f7f7f9;
+			padding: 14px;
+			border-radius: 8px;
+			border: 1px solid #e0e0e0;
+		}
+
+		.block {
+			background: #ffffff;
+			border: 1px solid #e0e0e0;
+			border-radius: 8px;
+			padding: 12px;
+			margin: 10px 0;
+		}
+
+		.block-header {
+			font-weight: bold;
+			color: #333;
+			margin-bottom: 6px;
+		}
+
+		.mono {
+			font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+			white-space: pre-wrap;
+		}
+
+		.label {
+			display: inline-block;
+			font-size: 12px;
+			color: #666;
+			margin-right: 6px;
+		}
+
+		.sentence-display {
+			background: #ffffff;
+			border: 1px solid #e0e0e0;
+			border-radius: 8px;
+			padding: 20px;
+			margin: 20px 0;
+			font-size: 18px;
+			line-height: 1.6;
+		}
+
+		.sentence-text {
+			letter-spacing: 0.5px;
+		}
+
+		.block-wrapper {
+			display: inline-block;
+			position: relative;
+			vertical-align: top;
+		}
+
+		.current-text-block {
+			background-color: #1a73e8;
+		}
+
+		.block-popup {
+			position: absolute;
+			top: 120%;
+			left: 0;
+			background: #ffffff;
+			border: 1px solid #e0e0e0;
+			border-radius: 8px;
+			padding: 10px 12px;
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+			z-index: 20;
+			min-width: 240px;
+			transition: opacity 0.15s ease-in-out;
+		}
+
+		.block-popup.popup-hidden {
+			opacity: 0;
+		}
+
+		.block-popup .title {
+			font-weight: bold;
+			margin-bottom: 6px;
+		}
+
+		.block-popup .row {
+			display: block;
+			margin: 4px 0;
+		}
+
+		.block-popup.bottom-left {
+			top: 120%;
+			left: 0;
+			right: auto;
+			bottom: auto;
+		}
+
+		.block-popup.bottom-right {
+			top: 120%;
+			right: 0;
+			left: auto;
+			bottom: auto;
+		}
+
+		.block-popup.top-left {
+			bottom: 120%;
+			left: 0;
+			right: auto;
+			top: auto;
+		}
+
+		.block-popup.top-right {
+			bottom: 120%;
+			right: 0;
+			left: auto;
+			top: auto;
+		}
+	</style>
+</head>
+<body>
+<div id="app">
+	<h1>문장 분석</h1>
+
+	<div class="row">
+		<textarea v-model="text" placeholder="영어 문장을 입력하고 분석 버튼을 누르세요."></textarea>
+	</div>
+
+	<div class="controls">
+		<button @click="analyze" :disabled="loading || !text || !text.trim()">분석</button>
+		<span class="info" v-if="!loading">/sentence/analysis API에 요청합니다.</span>
+		<span v-if="loading">요청 중입니다...</span>
+	</div>
+
+	<div class="error" v-if="error">{{ error }}</div>
+
+	<div class="result" v-if="rawResponse && !parsedBlocks">
+		<div class="label">원문 응답</div>
+		<div class="mono">{{ rawResponse }}</div>
+	</div>
+
+	<sentence-learning v-if="parsedBlocks && parsedBlocks.length" :parsed-blocks="parsedBlocks"></sentence-learning>
+</div>
+
+<script>
+	// 문장 학습을 위한 Vue 컴포넌트 정의
+	const VueCompSentenceLearning = {
+		name: 'SentenceLearning',
+		// 부모 컴포넌트로부터 받는 속성(props)
+		props: {
+			// API로부터 파싱된 문장 블록 배열
+			parsedBlocks: {
+				type: Array,
+				required: true
+			}
+		},
+		// 컴포넌트의 내부 상태 데이터
+		data() {
+			return {
+				// 현재 선택된 블록의 인덱스 (1부터 시작, 0은 선택되지 않음을 의미)
+				currentIndex: 0,
+				// 팝업의 위치를 결정하는 클래스 (예: 'bottom-left')
+				popupPlacement: 'bottom-left',
+				// 팝업을 일시적으로 숨기기 위한 상태 (애니메이션 효과용)
+				popupHidden: true
+			};
+		},
+		// 컴포넌트의 메서드
+		methods: {
+			/**
+			 * 텍스트 블록을 클릭했을 때 호출되는 메서드
+			 * @param {number} idx - 클릭된 블록의 인덱스
+			 * @param {Event} event - 클릭 이벤트 객체
+			 */
+			selectBlock(idx, event) {
+				// 이벤트 버블링을 막아 document의 클릭 이벤트가 바로 실행되지 않도록 함
+				if (event && event.stopPropagation) event.stopPropagation();
+				// 현재 인덱스를 클릭된 블록의 인덱스 + 1로 설정
+				this.currentIndex = idx + 1;
+				// 팝업 위치 초기화
+				this.popupPlacement = 'bottom-left';
+				// 팝업을 투명하게 만들어 위치 계산 후 나타나도록 함
+				this.popupHidden = true;
+
+				// Vue가 DOM을 업데이트한 후 콜백 함수를 실행
+				this.$nextTick(() => {
+					try {
+						// 팝업 DOM 요소를 가져옴
+						const el = document.getElementById('popup-' + idx);
+						if (!el) return;
+
+						// 팝업의 부모(.block-wrapper) 요소를 가져옴
+						const wrapper = el.parentElement;
+						if (!wrapper) return;
+
+						// 화면(뷰포트)의 너비와 높이를 가져옴
+						const vw = window.innerWidth || document.documentElement.clientWidth || 0;
+						const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+						const m = 8; // 화면 가장자리로부터의 최소 여백
+
+						// 팝업의 실제 크기를 가져옴
+						const popupW = el.offsetWidth || 240;
+						const popupH = el.offsetHeight || 120;
+
+						// 기준점(wrapper)의 위치와 크기 정보를 가져옴
+						const wr = wrapper.getBoundingClientRect();
+
+						// 기준점 주변의 사용 가능한 공간을 계산
+						const spaceBelow = vh - wr.bottom; // 아래쪽 공간
+						const spaceAbove = wr.top; // 위쪽 공간
+						const spaceRightFromLeft = vw - wr.left; // 오른쪽 공간
+						const spaceLeftFromRight = wr.right; // 왼쪽 공간
+
+						// 1. 수직 위치 결정: 아래쪽 공간이 충분하거나, 위쪽보다 넓으면 'bottom', 아니면 'top'
+						const placeVert = (spaceBelow >= popupH + m || spaceBelow >= spaceAbove) ? 'bottom' : 'top';
+						// 2. 수평 위치 결정: 오른쪽 공간이 충분하거나, 왼쪽보다 넓으면 'left', 아니면 'right'
+						const placeHorz = (spaceRightFromLeft >= popupW + m || spaceRightFromLeft >= spaceLeftFromRight) ? 'left' : 'right';
+
+						// 계산된 위치를 조합하여 CSS 클래스 이름으로 설정 (예: 'bottom-left')
+						this.popupPlacement = placeVert + '-' + placeHorz;
+
+						// 위치 클래스가 적용된 후 다시 DOM 업데이트를 기다림
+						this.$nextTick(() => {
+							// 최종 위치 조정 단계: 위에서 정한 클래스로도 팝업이 화면을 벗어나는 경우 미세 조정
+							const popupRect = el.getBoundingClientRect();
+							let adjustLeft = 0;
+							let adjustTop = 0;
+
+							// 수평 오버플로우 확인 및 조정 값 계산
+							if (popupRect.right > vw - m) {
+								// 팝업이 오른쪽 화면 밖으로 나갈 때
+								adjustLeft = vw - m - popupRect.right;
+							} else if (popupRect.left < m) {
+								// 팝업이 왼쪽 화면 밖으로 나갈 때
+								adjustLeft = m - popupRect.left;
+							}
+
+							// 수직 오버플로우 확인 및 조정 값 계산
+							if (popupRect.bottom > vh - m) {
+								// 팝업이 아래쪽 화면 밖으로 나갈 때
+								adjustTop = vh - m - popupRect.bottom;
+							} else if (popupRect.top < m) {
+								// 팝업이 위쪽 화면 밖으로 나갈 때
+								adjustTop = m - popupRect.top;
+							}
+
+							// 조정이 필요한 경우, CSS transform을 사용하여 위치를 보정
+							if (adjustLeft !== 0 || adjustTop !== 0) {
+								el.style.transform = `translate(${adjustLeft}px, ${adjustTop}px)`;
+							} else {
+								el.style.transform = ''; // 조정이 필요 없으면 transform 속성 제거
+							}
+
+							// 모든 위치 계산이 끝난 후 팝업을 보이게 함
+							this.popupHidden = false;
+						});
+					} catch (e) {
+						// 오류 발생 시 기본 위치로 설정하고 팝업을 보이게 함
+						this.popupPlacement = 'bottom-left';
+						this.popupHidden = false;
+					}
+				});
+			},
+			/**
+			 * 문서의 다른 곳을 클릭했을 때 팝업을 닫는 메서드
+			 */
+			handleDocumentClick() {
+				this.currentIndex = 0; // 선택된 블록 해제
+			}
+		},
+		// 컴포넌트가 DOM에 마운트되었을 때 실행되는 라이프사이클 훅
+		mounted() {
+			// 문서 전체에 클릭 이벤트 리스너를 추가하여 팝업 외부 클릭 감지
+			document.addEventListener('click', this.handleDocumentClick);
+		},
+		// 컴포넌트가 언마운트되기 전에 실행되는 라이프사이클 훅
+		beforeUnmount() {
+			// 메모리 누수를 방지하기 위해 추가했던 이벤트 리스너를 제거
+			document.removeEventListener('click', this.handleDocumentClick);
+		},
+		// 컴포넌트의 HTML 템플릿
+		template: `
+			<div>
+				<h3>문장 학습</h3>
+
+				<!-- 문장 블록들이 표시되는 영역 -->
+				<div class="sentence-display">
+					<div class="sentence-text">
+						<!-- API로 받은 블록들을 순회하며 표시 -->
+						<span class="block-wrapper" v-for="(b, index) in parsedBlocks" :key="index">
+							<span
+									@click="selectBlock(index, $event)"
+									:class="{
+										'current-text-block': index === currentIndex - 1 && currentIndex > 0
+									}"
+									style="cursor:pointer">{{ b.text_block }}</span><span v-if="index < parsedBlocks.length - 1">&nbsp;</span>
+							<!-- 현재 선택된 블록일 경우에만 팝업을 표시 -->
+							<div
+									class="block-popup"
+									:id="'popup-' + index"
+									:class="[popupPlacement, {'popup-hidden': popupHidden}]"
+									v-if="index === currentIndex - 1 && currentIndex > 0"
+									@click.stop
+							>
+								<div class="row"><span class="label">번역</span>{{ b.block_translation }}</div>
+								<div class="row"><span class="label">현재 상태</span>{{ b.state }}</div>
+								<div class="row"><span class="label">예측(문법)</span>{{ b.predict_state }}</div>
+								<div class="row"><span class="label">예측(내용)</span>{{ b.predict_state2 }}</div>
+							</div>
+						</span>
+					</div>
+				</div>
+
+				<div class="info">문장을 클릭하면 해당 블럭의 정보가 표시됩니다.</div>
+			</div>
+		`
+	};
+
+	// 루트 Vue 앱 생성
+	Vue.createApp({
+		components: {
+			// 위에서 정의한 컴포넌트를 등록
+			'sentence-learning': VueCompSentenceLearning
+		},
+		data() {
+			return {
+				text: '', // 사용자가 입력한 텍스트
+				loading: false, // API 요청 중 상태
+				error: '', // 오류 메시지
+				rawResponse: '', // API의 원본 응답 문자열
+				parsedBlocks: null // 파싱된 문장 블록 데이터
+			};
+		},
+		methods: {
+			/**
+			 * 문자열을 JSON 배열로 파싱 시도
+			 * LLM 응답이 다양한 형식(마크다운 코드 블록 등)으로 올 수 있어 여러 경우를 처리
+			 * @param {string} maybeJson - JSON일 가능성이 있는 문자열
+			 * @returns {Array|null} 파싱 성공 시 배열, 실패 시 null
+			 */
+			tryParseJson(maybeJson) {
+				if (typeof maybeJson !== 'string') {
+					return null;
+				}
+
+				// 마크다운 코드 펜스(```json ... ```) 형식 처리
+				const jsonMatch = maybeJson.match(/```json\s*([\s\S]*?)\s*```/);
+				if (jsonMatch) {
+					try {
+						const parsed = JSON.parse(jsonMatch[1].trim());
+						if (Array.isArray(parsed)) return parsed;
+					} catch (e) {
+						// 파싱 실패 시 다음 단계로 진행
+					}
+				}
+
+				// 일반 JSON 문자열 처리
+				try {
+					const parsed = JSON.parse(maybeJson);
+					if (Array.isArray(parsed)) return parsed;
+				} catch (e) {
+					// 파싱 실패 시 다음 단계로 진행
+				}
+
+				// 문자열 내에 포함된 JSON 배열 형식 `[ ... ]`을 추출하여 파싱 시도
+				try {
+					const m = maybeJson.match(/\[\s*\{[\s\S]*\}\s*\]/);
+					if (m) {
+						const p2 = JSON.parse(m[0]);
+						if (Array.isArray(p2)) return p2;
+					}
+				} catch (e) {
+					// 최종 실패
+				}
+
+				return null; // 모든 시도 실패 시 null 반환
+			},
+
+			/**
+			 * '분석' 버튼 클릭 시 실행되는 비동기 메서드
+			 */
+			async analyze() {
+				// 상태 초기화
+				this.error = '';
+				this.rawResponse = '';
+				this.parsedBlocks = null;
+				const text = (this.text || '').trim();
+				if (!text) {
+					return; // 입력 내용이 없으면 중단
+				}
+				this.loading = true; // 로딩 상태 시작
+
+				try {
+					// axios를 사용하여 서버에 POST 요청
+					const res = await axios.post('/sentence/analysis', {text: text});
+					const content = res?.data?.response;
+
+					// 디버깅을 위해 원본 응답 저장
+					if (typeof content === 'string') {
+						this.rawResponse = content;
+					} else {
+						this.rawResponse = JSON.stringify(content, null, 2);
+					}
+
+					// 응답 내용을 JSON 배열로 파싱
+					const blocks = this.tryParseJson(content);
+					if (blocks && Array.isArray(blocks)) {
+						// 파싱 성공 시, parsedBlocks 데이터를 업데이트하여 자식 컴포넌트에 전달
+						this.parsedBlocks = blocks;
+					}
+				} catch (err) {
+					console.error('Error:', err);
+					this.error = '오류가 발생했습니다. 다시 시도해주세요.';
+				} finally {
+					this.loading = false; // 로딩 상태 종료
+				}
+			}
+		}
+	}).mount('#app');
+</script>
+</body>
+</html>

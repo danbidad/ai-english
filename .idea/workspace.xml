@@ -5,32 +5,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73d49ff5-ff5a-4348-8d93-b0e703a33e55" name="변경" comment="시작">
-      <change afterPath="$PROJECT_DIR$/.aiignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/common.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/darkmode.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/dialog.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/protocol.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/youtube.html.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/youtube_loader.html.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/proxy.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/tokenizer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/utils/youtube_script.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/todo.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/JunieProjectTechnologies.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/agents.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/sentence.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/sentence.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/sentence2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/sentence3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/usage_db/keys.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/usage_db/reset_usage.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/usage_db/schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/usage_db/usagedb.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/usage_db/usagedb_sqlite.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/utils/cached_fetch.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.aiignore" beforeDir="false" afterPath="$PROJECT_DIR$/.aiignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.copilotignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cursorrules" beforeDir="false" afterPath="$PROJECT_DIR$/.aiassistant/rules/rules.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/ai-test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ai-test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai-test.code-workspace" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/mecab-0.996-ko-0.9.2.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/mecab-ko-dic-2.1.1-20180720.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/youtube.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/youtube.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube.html.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/youtube_loader.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube_loader.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/youtube_loader.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube_loader.html.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prompt.txt" beforeDir="false" afterPath="$PROJECT_DIR$/prompt.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/sentense.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/ai.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/ai.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transcript/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/transcript/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transcript/test/youtube_transcript_fetcher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/transcript/test/youtube_transcript_fetcher.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transcript/transcripts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/transcript/transcripts.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/youtube.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/youtube.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/proxy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/unused/proxy.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test/result/14년만에 해결된 하츠카이치 여고생 미제사건.1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/sentence.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test/result/Beepberry! Tiny Pi-based Blackberry cyberdeck #shorts.1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test/result/Beepberry! Tiny Pi-based Blackberry cyberdeck #shorts.2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/aireq.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test/result/Building the Worlds Biggest Mini PC.1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test/result/Building the Worlds Biggest Mini PC.2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test/result/Pilet_ The Portable Open-Source Mini-Computer.1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test/result/Pilet_ The Portable Open-Source Mini-Computer.2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test/result/[Eng CC] Soviet March - 1980&amp;#39;s Soviet Army [Red Alert 3].1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test/result/[Eng CC] Soviet March - 1980&amp;#39;s Soviet Army [Red Alert 3].2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test/test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/test_cached_fetch.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tokenizer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/unused/tokenizer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/cli.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/errors.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/formatters.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/html-unescaping.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/settings.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/test/youtube_transcript_fetcher.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/transcript/transcripts.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/unused/tts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/utils/filename.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/filename.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/utils/youtube_script.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/unused/youtube_script.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/youtube.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/unused/youtube.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +84,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;danbidad&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/danbidad/ai-test.git&quot;,
+    &quot;accountId&quot;: &quot;4f1fd7c0-5252-4d72-8274-18de31a16133&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/node_modules/@langchain/core/dist/messages/system.d.ts" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
@@ -67,65 +114,77 @@
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Jest.YouTubeTranscriptApi.getTranscript.executor&quot;: &quot;Run&quot;,
-    &quot;Jest.YouTubeTranscriptApi.listTranscripts.executor&quot;: &quot;Run&quot;,
-    &quot;Jest.YouTubeTranscriptApi.listTranscripts.비디오 ID로 자막 목록을 가져와야 함.executor&quot;: &quot;Debug&quot;,
-    &quot;Jest.__tests__/ 내 테스트.executor&quot;: &quot;Run&quot;,
-    &quot;Jest.transcript/ 내 테스트.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Node.js.tokenizer.ts.executor&quot;: &quot;Debug&quot;,
-    &quot;Node.js.youtube_transcript_fetcher.ts.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/PhpstormProjects/ai-test&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;F:/PhpstormProjects/ai-test/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.build.executor&quot;: &quot;Debug&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;npm.jest.executor&quot;: &quot;Run&quot;,
-    &quot;npm.start (1).executor&quot;: &quot;Run&quot;,
-    &quot;npm.start (2).executor&quot;: &quot;Run&quot;,
-    &quot;npm.start (3).executor&quot;: &quot;Run&quot;,
-    &quot;npm.start.executor&quot;: &quot;Run&quot;,
-    &quot;npm.test.executor&quot;: &quot;Run&quot;,
-    &quot;npm.test.js.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;E:\\PhpstormProjects\\ai-test\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Jest.YouTubeTranscriptApi.getTranscript.executor": "Run",
+    "Jest.YouTubeTranscriptApi.listTranscripts.executor": "Run",
+    "Jest.YouTubeTranscriptApi.listTranscripts.비디오 ID로 자막 목록을 가져와야 함.executor": "Debug",
+    "Jest.__tests__/ 내 테스트.executor": "Run",
+    "Jest.transcript/ 내 테스트.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.tokenizer.ts.executor": "Debug",
+    "Node.js.youtube_transcript_fetcher.ts.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/pocke/PhpstormProjects/ai-test/server/usage_db",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "F:/PhpstormProjects/ai-test/node_modules/jest",
+    "nodejs_package_manager_path": "npm",
+    "npm.build.executor": "Debug",
+    "npm.dev.executor": "Debug",
+    "npm.jest.executor": "Run",
+    "npm.start (1).executor": "Run",
+    "npm.start (2).executor": "Run",
+    "npm.start (3).executor": "Run",
+    "npm.start.executor": "Run",
+    "npm.test.executor": "Run",
+    "npm.test.js.executor": "Run",
+    "settings.editor.selected.configurable": "com.android.studio.ml.bot.mainConfigurable",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "C:\\Users\\pocke\\PhpstormProjects\\ai-test\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
+    ],
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
+      "SQLite"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pocke\PhpstormProjects\ai-test\server\usage_db" />
+      <recent name="C:\Users\pocke\PhpstormProjects\ai-test" />
+      <recent name="C:\Users\pocke\PhpstormProjects\ai-test\server" />
       <recent name="F:\PhpstormProjects\ai-test" />
       <recent name="F:\PhpstormProjects\ai-test\public" />
-      <recent name="E:\PhpstormProjects\ai-test\src\transcript" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pocke\PhpstormProjects\ai-test\server\routes" />
+      <recent name="C:\Users\pocke\PhpstormProjects\ai-test\server\old" />
       <recent name="$PROJECT_DIR$/public/css" />
       <recent name="F:\PhpstormProjects\ai-test" />
       <recent name="F:\PhpstormProjects\ai-test\server" />
-      <recent name="F:\PhpstormProjects\ai-test\server\test" />
-      <recent name="F:\PhpstormProjects\ai-test\src" />
     </key>
     <key name="es6.move.members.recent.items">
       <recent name="F:\PhpstormProjects\ai-test\src\tts.ts" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
-    <configuration name="tokenizer.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/tokenizer.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/server">
+    <configuration name="tokenizer.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/unused/tokenizer.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/server">
       <method v="2" />
     </configuration>
     <configuration name="youtube_transcript_fetcher.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/transcript/test/youtube_transcript_fetcher.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/server/transcript/test">
@@ -174,8 +233,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-PS-252.25557.128" />
-        <option value="bundled-php-predefined-a98d8de5180a-ce40d0652d34-com.jetbrains.php.sharedIndexes-PS-252.25557.128" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-PS-252.26199.163" />
+        <option value="bundled-php-predefined-a98d8de5180a-f0a8ef430dfa-com.jetbrains.php.sharedIndexes-PS-252.26199.163" />
       </set>
     </attachedChunks>
   </component>
@@ -389,6 +448,33 @@
       <workItem from="1758071577473" duration="978000" />
       <workItem from="1758166059185" duration="1396000" />
       <workItem from="1758169783299" duration="6431000" />
+      <workItem from="1758526518367" duration="3570000" />
+      <workItem from="1758596392997" duration="661000" />
+      <workItem from="1758597703043" duration="1797000" />
+      <workItem from="1758627797428" duration="657000" />
+      <workItem from="1758790561475" duration="640000" />
+      <workItem from="1758793045903" duration="3150000" />
+      <workItem from="1758810834804" duration="2268000" />
+      <workItem from="1758862053545" duration="9167000" />
+      <workItem from="1758886038280" duration="355000" />
+      <workItem from="1758886413409" duration="5867000" />
+      <workItem from="1759039535857" duration="1390000" />
+      <workItem from="1759122214889" duration="595000" />
+      <workItem from="1759123828445" duration="712000" />
+      <workItem from="1759129988290" duration="10311000" />
+      <workItem from="1759146764983" duration="6345000" />
+      <workItem from="1759167575466" duration="12378000" />
+      <workItem from="1759280461493" duration="142000" />
+      <workItem from="1759280630761" duration="59000" />
+      <workItem from="1759291309646" duration="13400000" />
+      <workItem from="1759316033305" duration="12697000" />
+      <workItem from="1759390681930" duration="7494000" />
+      <workItem from="1759479613968" duration="2983000" />
+      <workItem from="1759484068931" duration="179000" />
+      <workItem from="1759484274005" duration="1315000" />
+      <workItem from="1759500963548" duration="3576000" />
+      <workItem from="1759564035149" duration="6422000" />
+      <workItem from="1759582899355" duration="959000" />
     </task>
     <task id="LOCAL-00001" summary="시작">
       <option name="closed" value="true" />
@@ -414,7 +500,9 @@
     <option name="exactExcludedFiles">
       <list>
         <option value="$PROJECT_DIR$/server/test/test.js" />
+        <option value="$PROJECT_DIR$/server/index.js" />
         <option value="$PROJECT_DIR$/server/utils/filename.js" />
+        <option value="$PROJECT_DIR$/server/utils/cached_fetch.js" />
       </list>
     </option>
   </component>
@@ -447,21 +535,5 @@
   </component>
   <component name="VueSettings">
     <option name="innerServiceType" value="DISABLED" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/server/transcript/transcripts.ts</url>
-          <line>279</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/server/youtube.ts</url>
-          <line>117</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -9,8 +9,8 @@
     "skipLibCheck": true,
     "noImplicitAny": false,
     "types": ["node", "jest"],
-    "compileOnSave": false
   },
+  "compileOnSave": false,
   "ts-node": {
     "esm": true
   },
