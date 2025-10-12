@@ -3,12 +3,20 @@ import * as path from 'path';
 import * as crypto from 'crypto';
 import {__filename__dirname} from './filename.js';
 
+const BYPASS_MODE=1
 const {__filename, __dirname} = __filename__dirname(import.meta.url);
 
 // Default cache directory
 const DEFAULT_CACHE_DIR = path.join(__dirname, '..', '.cache');
 
-function getCacheFilePath(url, options?: RequestInit, cacheDir = DEFAULT_CACHE_DIR) {
+function getCacheFilePath(url, options?: RequestInit, cacheDir = DEFAULT_CACHE_DIR, is_full_path_name = true) {
+  // full패스네임인지 아닌지 '/'가 포함되어 있는지로 판단한다. 최소한 ./로 시작해야 하기 때문이다
+  if (is_full_path_name && !cacheDir.includes('/'))
+    throw Error('cacheDir is not full path name: ' + cacheDir)
+
+  if (!is_full_path_name)
+    cacheDir = path.join(__dirname, '..', cacheDir);
+
   const todayDir = getTodayCacheDir(cacheDir);
   const filename = generateCacheFilename(url, options);
   const filePath = path.join(todayDir, filename);
@@ -71,11 +79,11 @@ function writeToCache(filePath, contentType, body: Buffer) {
   fs.promises.writeFile(filePath, fileData);
 }
 
-export async function cachedFetch(url, options?: RequestInit, cacheDir = DEFAULT_CACHE_DIR) {
+export async function cachedFetch(url, options?: RequestInit, cacheDir = DEFAULT_CACHE_DIR, is_full_path_name = true) {
   // Check if the response is cached
-  const cacheFilePath = getCacheFilePath(url, options, cacheDir);
+  const cacheFilePath = getCacheFilePath(url, options, cacheDir, is_full_path_name);
 
-  if (fs.existsSync(cacheFilePath)) {
+  if (!BYPASS_MODE && fs.existsSync(cacheFilePath)) {
     // Read from cache
     try {
       const {contentType, body} = await readFromCache(cacheFilePath);

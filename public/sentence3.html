@@ -258,17 +258,22 @@
 						const m = 8; // 화면 가장자리로부터의 최소 여백
 
 						// 팝업의 실제 크기를 가져옴
-						const popupW = el.offsetWidth || 240;
-						const popupH = el.offsetHeight || 120;
+						const popupW = el.offsetWidth;
+						const popupH = el.offsetHeight;
 
 						// 기준점(wrapper)의 위치와 크기 정보를 가져옴
 						const wr = wrapper.getBoundingClientRect();
+
+						console.log('wrapper rect', wr)
+						console.log('popup size', popupW, popupH)
 
 						// 기준점 주변의 사용 가능한 공간을 계산
 						const spaceBelow = vh - wr.bottom; // 아래쪽 공간
 						const spaceAbove = wr.top; // 위쪽 공간
 						const spaceRightFromLeft = vw - wr.left; // 오른쪽 공간
 						const spaceLeftFromRight = wr.right; // 왼쪽 공간
+
+						console.log('Spaces:', { spaceBelow, spaceAbove, spaceRightFromLeft, spaceLeftFromRight });
 
 						// 1. 수직 위치 결정: 아래쪽 공간이 충분하거나, 위쪽보다 넓으면 'bottom', 아니면 'top'
 						const placeVert = (spaceBelow >= popupH + m || spaceBelow >= spaceAbove) ? 'bottom' : 'top';
@@ -277,6 +282,7 @@
 
 						// 계산된 위치를 조합하여 CSS 클래스 이름으로 설정 (예: 'bottom-left')
 						this.popupPlacement = placeVert + '-' + placeHorz;
+						console.log(this.popupPlacement)
 
 						// 위치 클래스가 적용된 후 다시 DOM 업데이트를 기다림
 						this.$nextTick(() => {

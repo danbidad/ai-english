@@ -9,9 +9,10 @@
 .venv
 .cache
 .idea
-.aiassistant
+.*cache
 
 # or folders
 dist/
 build/
 out/
+sqlite/

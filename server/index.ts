@@ -8,7 +8,8 @@ import { join } from 'path';
 import dotenv from 'dotenv';
 import {__filename__dirname} from "./utils/filename.js";
 import aiRoutes from './routes/ai.js';
-import sentenceRoutes from "./routes/sentence.js";'./routes/sentence.js'
+import sentenceRoutes from "./routes/sentence.js";
+import youtubeCaptionRoutes from './routes/youtube_caption.js';
 // SQLite 세션 저장소 사용 시
 // import SQLiteStore from 'connect-sqlite3';
 // const SQLiteStoreSession = SQLiteStore(session);
@@ -55,8 +56,9 @@ async function main() {
     prefix: '/',
   });
 
-  await fastify.register(aiRoutes);
+  await fastify.register(aiRoutes, { prefix: '/ai' });
   await fastify.register(sentenceRoutes, { prefix: '/sentence' });
+  await fastify.register(youtubeCaptionRoutes, { prefix: '/youtube/caption' });
 
   try {
     await fastify.listen({ port });

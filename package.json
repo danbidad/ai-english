@@ -29,8 +29,7 @@
     "jsdom": "^26.0.0",
     "langchain": "^0.3.34",
     "tsx": "^4.19.4",
-    "typescript": "^5.3.3",
-    "youtube-caption-extractor": "^1.9.1"
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@types/argparse": "^2.0.17",
