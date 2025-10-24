@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "scripts": {
+    "tailwind": "node tailwind.extract_layer.js && npx tailwindcss -i tailwind_input.css -o tailwind_output.css"
+  }
+}

@@ -19,12 +19,12 @@ export class APIUsageDB implements IUsageDB {
     console.log('APIUsageDB constructor')
     this.impl = new SQLiteUsageDB();
   }
-  init() { return this.impl.init(); }
+  async init() { return await this.impl.init(); }
   getAPIKey(aitype: AIType, model: string, opts?: { preferFree?: boolean }) { return this.impl.getAPIKey(aitype, model, opts); }
   async addTokenUsage(apiKey: string, model: string, input_tokens: number, output_tokens) { return this.impl.addTokenUsage(apiKey, model, input_tokens, output_tokens); }
   resetAndArchiveForPSTMidnight() { return this.impl.resetAndArchiveForPSTMidnight(); }
 }
 
 export const UsageDB = new APIUsageDB();
-await UsageDB.init();
-SetScheduleResetUsageDB()
+UsageDB.init();
+//SetScheduleResetUsageDB()

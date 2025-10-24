@@ -116,8 +116,7 @@ export async function cachedFetch(url, options?: RequestInit, cacheDir = DEFAULT
     // Get the response body as a buffer
     const arrayBuffer = await response.arrayBuffer();
     const body = Buffer.from(arrayBuffer);
-    const filePath = getCacheFilePath(url, options)
-    writeToCache(filePath, contentType, body);
+    writeToCache(cacheFilePath, contentType, body);
   }
 
   return response

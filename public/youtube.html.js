@@ -25,12 +25,15 @@ angular.module('youtubeApp', ['ngCookies'])
       let searchParams = new URLSearchParams(window.location.search)
       const videoId = searchParams.get('videoId')
 
-      // 쿠키에서 언어 설정 로드
-      $scope.motherLang = localStorage.getItem('motherLang') || 'ko'
-      $scope.subtitleLang1 = localStorage.getItem('subtitleLang1') || 'en'
-      $scope.subtitleLang2 = localStorage.getItem('subtitleLang2') || 'ko'
+      // motherLang 초기화 (쿠키 > 브라우저 > 기본값)
+      $scope.motherLang = $cookies.get('motherLang') || ($window.navigator.language || $window.navigator.userLanguage || 'ko').split('-')[0];
+      // subLang 초기화 (쿠키 > 기본값)
+      $scope.subLang = $cookies.get('subLang') || 'en';
 
-      console.log($scope.subtitleLang1, $scope.subtitleLang2)
+      // 결정된 언어 설정을 쿠키에 저장합니다.
+      $cookies.put('motherLang', $scope.motherLang);
+      $cookies.put('subLang', $scope.subLang);
+      console.log($scope.motherLang, $scope.subLang)
 
       $scope.subtitleLangs = [
         {id: 'en', name: 'English'},
@@ -62,6 +65,7 @@ angular.module('youtubeApp', ['ngCookies'])
       $scope.currentTime = 5
 
       $scope.motherLang = 'ko'
+      $scope.subLang = 'en'
       $scope.subtitles1 = []
       $scope.subtitles2 = []
 
@@ -73,7 +77,6 @@ angular.module('youtubeApp', ['ngCookies'])
       $scope.popupStyle = {}
       $scope.ttsLoading = false
 
-      $scope.loadVideo = loadVideo
       $scope.togglePlay = togglePlay
       $scope.isCurrentSubtitle = isCurrentSubtitle
       $scope.seekToTime = seekToTime
@@ -82,6 +85,7 @@ angular.module('youtubeApp', ['ngCookies'])
       $scope.playTTS = playTTS
       $scope.formatTime = formatTime
       $scope.saveOptions = saveOptions
+      $scope.closeDropdown = function () { document.activeElement.blur() }
 
       // YouTube API 준비
       $window.onYouTubeIframeAPIReady = function () {
@@ -146,23 +150,23 @@ angular.module('youtubeApp', ['ngCookies'])
             'hl': 'en'
           },
           events: {
-            'onStateChange': onPlayerStateChange,
-            'onReady': onPlayerReady,
-            'onApiChange': onApiChange
+            'onStateChange': onYTPlayerStateChange,
+            'onReady': onYTPlayerReady,
+            'onApiChange': onYTApiChange
           }
         })
 
-        function onApiChange(event) {
+        function onYTApiChange(event) {
           // 강제로 영어 캡션으로 바꿈. 캡션이 없으면 자동 생성 영어 캡션을 사용함
           player.setOption('captions', 'track', { languageCode: 'en' }); // 영어
         }
 
-        function onPlayerReady(event) {
+        function onYTPlayerReady(event) {
           // 플레이어가 준비되면 시간 업데이트 타이머 시작
-          startTimeUpdate()
+          startYTTimeUpdate()
         }
 
-        function startTimeUpdate() {
+        function startYTTimeUpdate() {
           if (timeUpdateInterval) {
             $interval.cancel(timeUpdateInterval)
           }
@@ -238,17 +242,10 @@ angular.module('youtubeApp', ['ngCookies'])
           }
         }
 
-        function onPlayerStateChange(event) {
+        function onYTPlayerStateChange(event) {
           $scope.$apply(function () {
             $scope.isPlaying = event.data === YT.PlayerState.PLAYING
           })
-        }
-
-        function scrollToSubtitle(index) {
-          const subtitleElement = document.getElementById(`subtitle-${index}`)
-          if (subtitleElement) {
-            //subtitleElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
         }
       }
 
@@ -282,12 +279,12 @@ angular.module('youtubeApp', ['ngCookies'])
 
         async function fetchSubtitlesList(videoId) {
           try {
-            const response = await $http.get(`/youtube/info/${videoId}/en`)
+            const response = await $http.get(`/youtube/caption/list/${videoId}`)
 
             console.log(response.data)
 
-            if (response.data.subtitles_list) {
-              return response.data.subtitles_list
+            if (response.data && response.data.length > 0) {
+              return response.data
             } else {
               console.log('지원되는 자막 언어가 없습니다.')
               return null
@@ -299,49 +296,45 @@ angular.module('youtubeApp', ['ngCookies'])
         }
 
         function fetchSubtitles() {
-          let subtitles1 = $scope.subtitlesList.find((subtitles) => subtitles.vssId==='.'+$scope.subtitleLang1) || $scope.subtitlesList.find((subtitles) => subtitles.vssId==='a.'+$scope.subtitleLang1)
-          let subtitles2 = $scope.subtitlesList.find((subtitles) => subtitles.vssId==='.'+$scope.subtitleLang2) || $scope.subtitlesList.find((subtitles) => subtitles.vssId==='a.'+$scope.subtitleLang2)
-
-          function SubtitleXMLtoJSON(xml) {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xml, "text/xml");
-
-            return Array.from(xmlDoc.getElementsByTagName('text')).map(node => ({
-              start: parseFloat(node.getAttribute('start')),
-              dur: parseFloat(node.getAttribute('dur')),
-              text: node.textContent
-            }));
-          }
-
-          if (subtitles1)
-            $http.get(`/proxy/trans/` + decodeURIComponent(subtitles1.baseUrl))
-              .then(function (response) {
-                if (response.data) {
-                  $scope.subtitles1 = SubtitleXMLtoJSON(response.data)
-                  currentSubtitleIndex1 = -1
-                  console.log($scope.subtitleLang1)
+          // 새로운 API를 사용하여 자막을 가져옵니다
+          $http.get(`/youtube/caption/download/${videoId}?lang=${$scope.subtitleLang1}&lang2=${$scope.subtitleLang2}`)
+            .then(function (response) {
+              if (response.data) {
+                // subtitles와 subtitles2가 이미 파싱되어 있음
+                if (response.data.subtitles && response.data.subtitles.length > 0) {
+                  // start와 dur를 문자열에서 숫자로 변환
+                  $scope.subtitles1 = response.data.subtitles.map(sub => ({
+                    start: parseFloat(sub.start),
+                    dur: parseFloat(sub.dur),
+                    text: sub.text
+                  }))
+                  currentSubtitleIndex = -1
+                  console.log($scope.subtitleLang1 + ' 자막 로드 완료')
                 } else {
-                  console.log($scope.subtitleLang1 + '자막이 없습니다.')
+                  console.log($scope.subtitleLang1 + ' 자막이 없습니다.')
+                  $scope.subtitles1 = []
                 }
-              })
-              .catch(function (error) {
-                console.error('자막 가져오기 오류:', error)
-              })
 
-          if (subtitles2)
-            $http.get(`/proxy/` + decodeURIComponent(subtitles2.baseUrl))
-              .then(function (response) {
-                if (response.data) {
-                  $scope.subtitles2 = SubtitleXMLtoJSON(response.data)
+                if (response.data.subtitles2 && response.data.subtitles2.length > 0) {
+                  // start와 dur를 문자열에서 숫자로 변환
+                  $scope.subtitles2 = response.data.subtitles2.map(sub => ({
+                    start: parseFloat(sub.start),
+                    dur: parseFloat(sub.dur),
+                    text: sub.text
+                  }))
                   currentSubtitleIndex2 = -1
-                  console.log($scope.subtitleLang2)
+                  console.log($scope.subtitleLang2 + ' 자막 로드 완료')
                 } else {
-                  console.log($scope.subtitleLang2 + '자막이 없습니다.')
+                  console.log($scope.subtitleLang2 + ' 자막이 없습니다.')
+                  $scope.subtitles2 = []
                 }
-              })
-              .catch(function (error) {
-                console.error('자막 가져오기 오류:', error)
-              })
+              }
+            })
+            .catch(function (error) {
+              console.error('자막 가져오기 오류:', error)
+              $scope.subtitles1 = []
+              $scope.subtitles2 = []
+            })
         }
       }
 
@@ -408,10 +401,8 @@ angular.module('youtubeApp', ['ngCookies'])
       }
 
       function saveOptions() {
-        console.log('saveOptions()')
-        localStorage.setItem('motherLang', $scope.motherLang)
-        localStorage.setItem('subtitleLang1', $scope.subtitleLang1)
-        localStorage.setItem('subtitleLang2', $scope.subtitleLang2)
+        $cookies.motherLang = $scope.motherLang
+        $cookies.subLang = $scope.subLang
         closeOptionDialog()
       }
 

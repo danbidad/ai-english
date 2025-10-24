@@ -2,8 +2,8 @@ import sqlite3 from 'sqlite3';
 import {Database, open} from 'sqlite';
 import {AIType, IUsageDB} from "./usagedb.js";
 import {readFileSync} from "node:fs";
-import path from "node:path";
-import fs from "fs";
+import * as path from "node:path";
+import * as fs from "fs";
 
 export class SQLiteUsageDB implements IUsageDB {
   private db!: Database<sqlite3.Database, sqlite3.Statement>;
@@ -26,8 +26,8 @@ export class SQLiteUsageDB implements IUsageDB {
 
   async loadData(): Promise<void> {
     console.log('SQLiteUsageDB.loadData()')
-    let schemaPath = path.join(process.cwd(), 'server', 'usage_db', 'schema.sql');
-    let keysPath = path.join(process.cwd(), 'server', 'usage_db', 'keys.sql');
+    let schemaPath = path.join(process.cwd(), 'usage_db', 'schema.sql');
+    let keysPath = path.join(process.cwd(), 'usage_db', 'keys.sql');
 
     const schema = readFileSync(schemaPath, 'utf-8');
     await this.db.exec(schema);

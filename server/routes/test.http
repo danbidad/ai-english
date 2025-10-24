@@ -1,0 +1,11 @@
+GET http://localhost:3000/youtube/caption/details/_I9HUOoyykw
+Accept: application/json
+
+###
+
+GET http://localhost:3000/youtube/caption/details/_I9HUOoyykw?lang=ko&lang2=en
+Accept: application/json
+
+###
+
+

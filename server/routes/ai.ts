@@ -1,5 +1,5 @@
 import axios from 'axios';
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 import {models, queryToAI} from "../utils/aireq.js";
 import { DallEAPIWrapper } from "@langchain/openai";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";

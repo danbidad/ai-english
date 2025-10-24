@@ -6,3 +6,4 @@ dist/
 .cache
 sqlite/
 .*cache
+tailwind_temp.css

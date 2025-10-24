@@ -2,124 +2,263 @@
 <html lang="ko" ng-app="youtubeApp">
 
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<title>유튜브 자막 플레이어</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-cookies.min.js"></script>
 	<script src="https://www.youtube.com/iframe_api"></script>
+	<!-- DaisyUI와 Tailwind Play CDN을 불러옵니다. -->
+	<!-- <link href="/tailwind/tailwind_output.css" rel="stylesheet" type="text/css"/> -->
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@4/dist/full.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.tailwindcss.com"></script>
 	<script src="common.js"></script>
 	<script src="youtube.html.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-	<link rel="stylesheet" href="youtube.html.css">
+	<style type="text/tailwindcss">
+		@layer components {
+			.btn-xyz {
+				@apply mb-0 pb-0 text-clip
+			}
+		}
+	</style>
+	<style>
+		@media (orientation: portrait) {
+			.layout-container {
+				display: flex;
+				flex-direction: column;
+				min-height: calc(100vh + 1px);
+				width: 100vw;
+			}
+
+			.player_area {
+				width: 100vw;
+				aspect-ratio: 16 / 9;
+				max-height: 90vh; /* 영역1의 최대 높이를 화면 높이의 90%로 제한 */
+			}
+
+			.caption_area {
+				width: 100vw;
+				flex: 1;
+				overflow: hidden;
+				display: flex
+			}
+
+			.control_area {
+				width: 100vw;
+				height: 10vh; /* 화면 높이의 1/20 */
+				order: 3; /* 포트레이트에서 최하단 배치 */
+			}
+
+			/* 포트레이트 모드에서 영역 순서 조정 */
+			.left-section {
+				display: contents; /* 래퍼 무시하고 자식 요소들을 직접 배치 */
+			}
+
+			.player_area {
+				order: 1; /* 영역1: 상단 */
+			}
+
+			.caption_area {
+				order: 2; /* 영역2: 중간 */
+			}
+		}
+
+		/* 랜드스케이프 모드 기본 스타일 (20:9 미만 - 세로 배치) */
+		@media (orientation: landscape) {
+			.layout-container {
+				display: flex;
+				flex-direction: row;
+				min-height: calc(100vh + 1px);
+				width: 100vw;
+			}
+
+			.left-section {
+				display: flex;
+				flex-direction: column; /* 기본: 세로 배치 */
+				flex: 1;
+				height: 100vh;
+			}
+
+			.player_area {
+				/* area-3의 높이를 제외한 나머지 공간을 모두 차지하도록 flex: 1을 부여합니다. */
+				flex: 1;
+				/* aspect-ratio: 16 / 9;*/
+				width: auto;
+			}
+
+			.control_area {
+				/* 높이를 10vh로 고정하여 항상 일정한 크기를 유지하도록 합니다. */
+				height: 10vh;
+				overflow: hidden;
+			}
+
+			.caption_area {
+				width: 100vh; /* 정사각형: 넓이 = 높이 = 화면 높이 */
+				height: 100vh;
+				max-width: 50vw; /* 랜드스케이프에서 최대 넓이를 화면 넓이의 절반으로 제한 */
+			}
+		}
+	</style>
 </head>
 
-<body ng-controller="YoutubeController">
+<body ng-controller="YoutubeController" class="m-0 p-0">
 
-<!-- 패널 오버레이 -->
-<div class="dialog-overlay" onclick="closeOptionDialog()">></div>
-<!-- 패널 대화상자 -->
-<div class="dialog" id="optionDialog">
-	<div class="dialog-close" onclick="closeOptionDialog()">×</div>
-	<h3>언어 설정</h3>
-	<div class="mb-3">
-		<label for="subtitleLang1" class="form-label">자막언어1</label>
-		<select id="subtitleLang1" ng-model="subtitleLang1" class="form-select" ng-options="option.id as option.name for option in subtitleLangs">
-		</select>
-	</div>
-	<div class="mb-3">
-		<label for="subtitleLang2" class="form-label">자막언어2</label>
-		<select id="subtitleLang2" ng-model="subtitleLang2" class="form-select" ng-options="option.id as option.name for option in subtitleLangs">
-		</select>
-	</div>
-	<button class="btn btn-success mt-3" ng-click="saveOptions()">저장</button>
-</div>
-
-<div id="page">
-	{{ subtitleLang1 }}
-	<div id="panel1">
-		<div class="video-container">
-			<div class="video-wrapper">
-				<div id="player"></div>
-				<div class="current-subtitle-overlay" ng-if="subtitle1" ng-class="{'empty': !subtitle1}">
-                <span style="margin-right: 5px;" ng-repeat="word in splitWords(subtitle1.text) track by $index"
-											class="word"
-											ng-click="showWordMeaning($event, word)">{{ word }}</span>&nbsp;
+<!-- DaisyUI Modal 컴포넌트로 변경된 옵션 설정창 -->
+<dialog id="option_modal" class="modal">
+	<div class="modal-box">
+		<h3 class="font-bold text-lg">언어 설정</h3>
+		<div class="py-4 space-y-4">
+			<div>
+				<label class="label">
+					<span class="label-text">모국어</span>
+				</label>
+				<!-- Custom DaisyUI Dropdown for subtitleLang1 -->
+				<div class="dropdown w-full">
+					<div tabindex="0" role="button" class="btn btn-outline w-full justify-between">
+						<span>{{ (subtitleLangs | filter:{id:subtitleLang1})[0].name }}</span>
+						<i class="bi bi-chevron-down"></i>
+					</div>
+					<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full mt-1 border border-base-300">
+						<li ng-repeat="option in subtitleLangs">
+							<!-- 옵션 클릭 시 값을 설정하고 드롭다운을 닫습니다 -->
+							<a ng-click="closeDropdown()" ng-class="{'active': subtitleLang1 === option.id}">
+								{{ option.name }}
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div>
+				<label class="label">
+					<span class="label-text">학습언어</span>
+				</label>
+				<!-- Custom DaisyUI Dropdown for subtitleLang2 -->
+				<div class="dropdown w-full">
+					<div tabindex="0" role="button" class="btn btn-outline w-full justify-between">
+						<span>{{ (subtitleLangs | filter:{id:subtitleLang2})[0].name }}</span>
+						<i class="bi bi-chevron-down"></i>
+					</div>
+					<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full mt-1 border border-base-300">
+						<li ng-repeat="option in languageFlags">
+							<!-- 옵션 클릭 시 값을 설정하고 드롭다운을 닫습니다 -->
+							<a ng-click="subtitleLang2 = option.id;" ng-class="{'active': subtitleLang2 === option.id}">
+								{{ option.name }}
+							</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
+		<div class="modal-action">
+			<form method="dialog">
+				<!-- if there is a button in form, it will close the modal -->
+				<button class="btn btn-outline">취소</button>
+			</form>
+			<button class="btn btn-primary" ng-click="saveOptions()">저장</button>
+		</div>
+	</div>
+</dialog>
 
-		<div class="subtitles-container" ng-if="subtitles1 && subtitles1.length">
+<!-- 포트레이트: 세로 레이아웃 (영역1 -> 영역2 -> 영역3) -->
+<!-- 랜드스케이프 < 20:9: 세로 배치 (영역1 위 + 영역3 아래 | 영역2) -->
+<!-- 랜드스케이프 >= 20:9: 가로 배치 (영역1 왼쪽 + 영역3 오른쪽 | 영역2) -->
+<div class="layout-container">
+	<div class="left-section">
+		<!-- 영역 1: 플레이어 영역 (16:9 비율) -->
+		<div class="player_area bg-base-200 flex items-center justify-center">
+			<!-- <div id="player" class="absolute top-0 left-0 w-full h-full"></div> -->
+			<div class="relative w-full h-full">
+				<div id="player" class="absolute top-0 left-0 w-full h-full"></div>
+			</div>
+			<!-- 현재 재생중인 자막 표시 영역
+			<div class="relative pb-[56.25%] h-0">
+				<div class="absolute bottom-0 w-full bg-black bg-opacity-75 text-white text-center p-4 text-xl" ng-if="subtitle1">
+						<span ng-repeat="word in splitWords(subtitle1.text) track by $index"
+									class="cursor-pointer hover:bg-primary p-1 rounded transition">{{ word }} </span>
+				</div>
+			</div>-->
+		</div>
+		<!-- 영역 3: 컨트롤 박스 영역 -->
+		<div class="control_area bg-base-300 flex items-center justify-center">
+			<!-- 재생 시간 표시 영역 -->
+			<div class="flex-grow-0 px-4 flex items-center">
+				<span class="font-mono text-sm">{{ currentTime | formatDuration }}</span>
+			</div>
+			<!-- 중앙 컨트롤 버튼 그룹 -->
+			<div class="flex-grow flex justify-center">
+				<button class="btn btn-ghost btn-circle"><i class="bi bi-skip-backward-fill text-xl"></i></button>
+				<button class="btn btn-ghost btn-circle" ng-click="togglePlay()">
+					<i class="bi bi-play-fill text-3xl" ng-show="!isPlaying"></i>
+					<i class="bi bi-pause-fill text-3xl" ng-show="isPlaying"></i>
+				</button>
+				<button class="btn btn-ghost btn-circle"><i class="bi bi-skip-forward-fill text-xl"></i></button>
+				<button class="btn btn-ghost btn-circle"><i class="bi bi-arrow-clockwise text-xl"></i></button>
+			</div>
+			<!-- 우측 설정 버튼 영역 -->
+			<div class="flex-grow-0 px-4 flex items-center">
+				<button class="btn btn-ghost btn-circle" onclick="option_modal.showModal()"><i class="bi bi-gear text-xl"></i></button>
+			</div>
+		</div>
+	</div>
+
+	<!-- 영역 2: 자막 영역 -->
+	<div class="caption_area bg-base-100">
+		<div class="p-4 space-y-2" ng-if="subtitles1 && subtitles1.length">
 			<div ng-repeat="subtitle in subtitles1 track by $index"
-					 class="subtitle-item"
-					 ng-class="{'active': isCurrentSubtitle(subtitle)}"
-					 id="subtitle-{{$index}}">
-				<div class="subtitle-header">
-					<div class="subtitle-time">{{ formatTime(subtitle.start) }} - {{ formatTime(subtitle.dur) }}</div>
-					<div class="icon-group">
-						<i class="fas fa-volume-up seek-icon"
-							 ng-if="isSpeechSupported"
-							 ng-click="playTTS(subtitle.text, $event, $index)"
-							 title="텍스트를 음성으로 읽기"></i>
-						<i class="fas fa-play-circle seek-icon"
-							 ng-click="seekToTime(subtitle.start)"
-							 title="이 시간으로 이동"></i>
+					 class="card bg-base-100 shadow-md transition"
+					 ng-class="{'border-2 border-primary': isCurrentSubtitle(subtitle)}"
+					 id="subtitle1-{{$index}}">
+				<div class="card-body p-3">
+					<div class="flex justify-between items-center text-xs text-base-content/60 mb-1">
+						<div class="font-mono">{{ formatTime(subtitle.start) }}</div>
+						<div class="flex items-center space-x-1">
+							<button class="btn btn-ghost btn-xs btn-circle" ng-if="isSpeechSupported" ng-click="playTTS(subtitle.text, $event, $index)" title="TTS 재생">
+								<i class="fas fa-volume-up"></i>
+							</button>
+							<button class="btn btn-ghost btn-xs btn-circle" ng-click="seekToTime(subtitle.start)" title="이 시간으로 이동">
+								<i class="fas fa-play-circle"></i>
+							</button>
+						</div>
 					</div>
-				</div>
-				<div class="subtitle-text">
-					{{ subtitle.text }}
+					<p class="text-base-content">{{ subtitle.text }}</p>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div id="panel2">
-		<div class="subtitles-container2" ng-if="subtitles2 && subtitles2.length">
-			<div ng-repeat="subtitle in subtitles2 track by $index"
-					 class="subtitle-item"
-					 ng-class="{'active': isCurrentSubtitle(subtitle)}"
-					 id="subtitle-{{$index}}">
-				<div class="subtitle-header">
-					<div class="subtitle-time">{{ formatTime(subtitle.start) }} - {{ formatTime(subtitle.dur) }}</div>
-					<div class="icon-group">
-						<i class="fas fa-volume-up seek-icon"
-							 ng-if="isSpeechSupported"
-							 ng-click="playTTS(subtitle.text, $event, $index)"
-							 title="텍스트를 음성으로 읽기"></i>
-						<i class="fas fa-play-circle seek-icon"
-							 ng-click="seekToTime(subtitle.start)"
-							 title="이 시간으로 이동"></i>
-					</div>
-				</div>
-				<div class="subtitle-text">
-					{{ subtitle.text }}
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<div id="controlBar">
-		<div class="current-time">{{ currentTime | formatDuration }}</div>
-		<div class="control-button">
-			<i class="bi bi-skip-backward-fill"></i>
-		</div>
-		<div class="control-button" ng-click="togglePlay()">
-			<i class="bi bi-play-fill" ng-show="!isPlaying"></i>
-			<i class="bi bi-stop-fill" ng-show="isPlaying"></i>
-		</div>
-		<div class="control-button">
-			<i class="bi bi-skip-forward-fill"></i>
-		</div>
-		<div class="control-button">
-			<i class="bi bi-arrow-clockwise"></i>
-		</div>
-		<div class="control-button" onclick="openOptionDialog()">
-			<i class="bi bi-gear"></i>
+		<div class="p-4 space-y-2 bg-base-200" ng-if="subtitles2 && subtitles2.length">
+			<div ng-repeat="subtitle in subtitles2 track by $index"
+					 class="card bg-base-200 shadow-md transition"
+					 ng-class="{'border-2 border-secondary': isCurrentSubtitle(subtitle)}"
+					 id="subtitle2-{{$index}}">
+				<div class="card-body p-3">
+					<div class="flex justify-between items-center text-xs text-base-content/60 mb-1">
+						<div class="font-mono">{{ formatTime(subtitle.start) }}</div>
+						<div class="flex items-center space-x-1">
+							<button class="btn btn-ghost btn-xs btn-circle" ng-if="isSpeechSupported" ng-click="playTTS(subtitle.text, $event, $index)" title="TTS 재생">
+								<i class="fas fa-volume-up"></i>
+							</button>
+							<button class="btn btn-ghost btn-xs btn-circle" ng-click="seekToTime(subtitle.start)" title="이 시간으로 이동">
+								<i class="fas fa-play-circle"></i>
+							</button>
+						</div>
+					</div>
+					<p class="text-base-content">{{ subtitle.text }}</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-<div class="word-popup" ng-if="selectedWord" ng-style="popupStyle" ng-if="wordMeanings">
-	<div class="meaning" ng-repeat="meaning in wordMeanings">
-		<span class="pos">{{ meaning.pos }}.</span> {{ meaning.definitions[0].definition }}
+
+<!-- 단어 뜻 팝업 -->
+<div class="card bg-base-100 shadow-xl absolute z-50" ng-if="selectedWord" ng-style="popupStyle">
+	<div class="card-body p-4">
+		<div class="mb-1" ng-repeat="meaning in wordMeanings">
+			<span class="font-bold text-sm text-primary">{{ meaning.partOfSpeech }}.</span>
+			<span class="text-sm">{{ meaning.definitions[0].definition }}</span>
+		</div>
 	</div>
 </div>
 </body>
@@ -127,22 +266,18 @@
 </html>
 
 <script>
-	// 요소 가져오기
-	const dialog = document.getElementById('optionDialog');
-	const dialogOverlay = document.getElementsByClassName('dialog-overlay');
-	const saveOptionsBtn = document.getElementById('saveOptionsBtn');
-
-	// 패널 열기
-	function openOptionDialog() {
-		dialog.style.display = 'block';
-		dialogOverlay[0].style.display = 'block';
-	};
-
-	// 패널 닫기 함수
+	// 옵션 저장 후 모달을 닫기 위한 함수
 	function closeOptionDialog() {
-		dialog.style.display = 'none';
-		dialogOverlay[0].style.display = 'none';
+		document.getElementById('option_modal').close();
 	}
+
+
+	// 드롭다운 메뉴 항목 클릭 시 blur 처리 (모달 닫기 위함)
+	setTimeout( () => {
+		document.querySelectorAll('.dropdown-content li a').addEventListener('click', function (event) {
+			console.log(1);
+			document.activeElement.blur();
+		});
+	}, 0)
+
 </script>
-<style>
-</style>

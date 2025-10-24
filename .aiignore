@@ -10,6 +10,8 @@
 .cache
 .idea
 .*cache
+tailwind_input.css
+tailwind_temp.css
 
 # or folders
 dist/

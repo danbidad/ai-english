@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 import {__filename__dirname} from "./utils/filename.js";
 import aiRoutes from './routes/ai.js';
 import sentenceRoutes from "./routes/sentence.js";
-import youtubeCaptionRoutes from './routes/youtube_caption.js';
+import { youtubeCaptionRoutes } from './routes/youtube_caption.js';
 // SQLite 세션 저장소 사용 시
 // import SQLiteStore from 'connect-sqlite3';
 // const SQLiteStoreSession = SQLiteStore(session);
@@ -61,7 +61,7 @@ async function main() {
   await fastify.register(youtubeCaptionRoutes, { prefix: '/youtube/caption' });
 
   try {
-    await fastify.listen({ port });
+    await fastify.listen({ port, host: '0.0.0.0' });
     console.log(`서버가 http://localhost:${port} 에서 실행 중입니다`);
   } catch (err) {
     fastify.log.error(err);
