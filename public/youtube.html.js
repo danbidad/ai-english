@@ -19,43 +19,47 @@ angular.module('youtubeApp', ['ngCookies'])
     function ($scope, $window, $http, $interval, $location, $cookies) {
       let player
       let timeUpdateInterval
-      let currentSubtitleIndex = -1
-      let currentSubtitleIndex2 = -1
       let currentUtterance = null
       let searchParams = new URLSearchParams(window.location.search)
       const videoId = searchParams.get('videoId')
 
       // motherLang 초기화 (쿠키 > 브라우저 > 기본값)
-      $scope.motherLang = $cookies.get('motherLang') || ($window.navigator.language || $window.navigator.userLanguage || 'ko').split('-')[0];
+      const cookieMotherLang = $cookies.get('motherLang');
+      const browserLang = ($window.navigator.language || $window.navigator.userLanguage || 'ko').split('-')[0];
+      $scope.motherLang = cookieMotherLang || browserLang;
+
       // subLang 초기화 (쿠키 > 기본값)
-      $scope.subLang = $cookies.get('subLang') || 'en';
+      const cookieSubLang = $cookies.get('subLang');
+      $scope.subLang = cookieSubLang || 'en';
+
+      console.log(`[Language Setup] Mother Language: ${$scope.motherLang} (Cookie: ${cookieMotherLang}, Browser: ${browserLang})`);
+      console.log(`[Language Setup] Subtitle Language: ${$scope.subLang} (Cookie: ${cookieSubLang}, Default: en)`);
 
       // 결정된 언어 설정을 쿠키에 저장합니다.
       $cookies.put('motherLang', $scope.motherLang);
       $cookies.put('subLang', $scope.subLang);
-      console.log($scope.motherLang, $scope.subLang)
 
       $scope.subtitleLangs = [
-        {id: 'en', name: 'English'},
-        {id: 'ko', name: 'Korean'},
-        {id: 'jp', name: 'Japanese'},
+        { id: 'en', name: 'English' },
+        { id: 'ko', name: 'Korean' },
+        { id: 'jp', name: 'Japanese' },
       ]
 
       $scope.languageFlags = {
-        'ko': {flag: '🇰🇷', name: '한국어'},
-        'en': {flag: '🇺🇸', name: '영어'},
-        'ja': {flag: '🇯🇵', name: '일본어'},
-        'zh': {flag: '🇨🇳', name: '중국어'},
-        'es': {flag: '🇪🇸', name: '스페인어'},
-        'fr': {flag: '🇫🇷', name: '프랑스어'},
-        'de': {flag: '🇩🇪', name: '독일어'},
-        'ru': {flag: '🇷🇺', name: '러시아어'},
-        'pt': {flag: '🇵🇹', name: '포르투갈어'},
-        'it': {flag: '🇮🇹', name: '이탈리아어'},
-        'ar': {flag: '🇸🇦', name: '아랍어'},
-        'hi': {flag: '🇮🇳', name: '힌디어'},
-        'vi': {flag: '🇻🇳', name: '베트남어'},
-        'th': {flag: '🇹🇭', name: '태국어'}
+        'ko': { flag: '🇰🇷', name: '한국어' },
+        'en': { flag: '🇺🇸', name: '영어' },
+        'ja': { flag: '🇯🇵', name: '일본어' },
+        'zh': { flag: '🇨🇳', name: '중국어' },
+        'es': { flag: '🇪🇸', name: '스페인어' },
+        'fr': { flag: '🇫🇷', name: '프랑스어' },
+        'de': { flag: '🇩🇪', name: '독일어' },
+        'ru': { flag: '🇷🇺', name: '러시아어' },
+        'pt': { flag: '🇵🇹', name: '포르투갈어' },
+        'it': { flag: '🇮🇹', name: '이탈리아어' },
+        'ar': { flag: '🇸🇦', name: '아랍어' },
+        'hi': { flag: '🇮🇳', name: '힌디어' },
+        'vi': { flag: '🇻🇳', name: '베트남어' },
+        'th': { flag: '🇹🇭', name: '태국어' }
       }
 
       $scope.youtubeUrl = ''
@@ -63,6 +67,9 @@ angular.module('youtubeApp', ['ngCookies'])
       $scope.errorMessage = ''
       $scope.isPlaying = false
       $scope.currentTime = 5
+      $scope.autostop = false
+      $scope.targetAutoStopTime = -1
+      $scope.autoStopHandled = false
 
       $scope.motherLang = 'ko'
       $scope.subLang = 'en'
@@ -71,6 +78,8 @@ angular.module('youtubeApp', ['ngCookies'])
 
       $scope.subtitle1 = null
       $scope.subtitle2 = null
+      $scope.currentSubtitleIndex = -1
+      $scope.currentSubtitleIndex2 = -1
 
       $scope.selectedWord = null
       $scope.wordMeanings = []
@@ -84,7 +93,9 @@ angular.module('youtubeApp', ['ngCookies'])
       $scope.showWordMeaning = showWordMeaning
       $scope.playTTS = playTTS
       $scope.formatTime = formatTime
+      $scope.formatTime = formatTime
       $scope.saveOptions = saveOptions
+      $scope.openOptionDialog = openOptionDialog
       $scope.closeDropdown = function () { document.activeElement.blur() }
 
       // YouTube API 준비
@@ -174,71 +185,86 @@ angular.module('youtubeApp', ['ngCookies'])
             if (player && player.getCurrentTime) {
               $scope.currentTime = player.getCurrentTime()
               updateCurrentSubtitle($scope.currentTime)
+
+              // Autostop Logic
+              if ($scope.autostop && $scope.isPlaying && $scope.targetAutoStopTime !== -1 && !$scope.autoStopHandled) {
+                // Check if we reached the stop time
+                if ($scope.currentTime >= $scope.targetAutoStopTime) {
+                  // Tolerance check: if we are WAY past the stop time (e.g. user seeked), don't stop
+                  if ($scope.currentTime - $scope.targetAutoStopTime < 2.0) {
+                    player.pauseVideo();
+                    $scope.autoStopHandled = true; // Mark as handled for this subtitle
+                    console.log(`[Autostop] Paused at ${$scope.currentTime} (Target: ${$scope.targetAutoStopTime})`);
+                  } else {
+                    // We are too far past, assume user seeked or something. Reset logic for next sub?
+                    // Actually, if we are far past, we just ignore this specific stop target.
+                    // It will be updated when the next subtitle starts (which might have already happened).
+                  }
+                }
+              }
             }
           }, 100)
         }
 
+        function findCurPosInSubtitles(curTime, subtitles) {
+          if (subtitles && subtitles.length > 0) {
+            for (let i = 0; i < subtitles.length; i++) {
+              const subtitle = subtitles[i]
+              const start = parseFloat(subtitle.start)
+              const duration = parseFloat(subtitle.dur)
+
+              // 현재 시간이 자막의 시작과 끝 사이에 있는지 확인
+              if (start <= curTime && curTime <= (start + duration)) {
+                return i
+              }
+            }
+          }
+
+          return -1
+        }
+
         function updateCurrentSubtitle(currentTime) {
-          // 첫 번째 자막 트랙 처리
-          let newSubtitleIndex1 = -1
-          let foundSubtitle1 = null
-
-          if ($scope.subtitles1 && $scope.subtitles1.length > 0) {
-            for (let i = 0; i < $scope.subtitles1.length; i++) {
-              const subtitle = $scope.subtitles1[i]
-              const start = parseFloat(subtitle.start)
-              const duration = parseFloat(subtitle.dur)
-
-              // 현재 시간이 자막의 시작과 끝 사이에 있는지 확인
-              if (start <= currentTime && currentTime <= (start + duration)) {
-                newSubtitleIndex1 = i
-                foundSubtitle1 = subtitle
-                break
-              }
-            }
-          }
-
-          // 두 번째 자막 트랙 처리
-          let newSubtitleIndex2 = -1
-          let foundSubtitle2 = null
-
-          if ($scope.subtitles2 && $scope.subtitles2.length > 0) {
-            for (let i = 0; i < $scope.subtitles2.length; i++) {
-              const subtitle = $scope.subtitles2[i]
-              const start = parseFloat(subtitle.start)
-              const duration = parseFloat(subtitle.dur)
-
-              // 현재 시간이 자막의 시작과 끝 사이에 있는지 확인
-              if (start <= currentTime && currentTime <= (start + duration)) {
-                newSubtitleIndex2 = i
-                foundSubtitle2 = subtitle
-                break
-              }
-            }
-          }
+          let newSubtitleIndex1 = findCurPosInSubtitles(currentTime, $scope.subtitles1)
+          let newSubtitleIndex2 = findCurPosInSubtitles(currentTime, $scope.subtitles2)
 
           // 첫 번째 자막이 바뀌었고 유효한 자막이 있을 때만 스크롤 및 업데이트
-          if (newSubtitleIndex1 !== currentSubtitleIndex && newSubtitleIndex1 !== -1) {
-            currentSubtitleIndex = newSubtitleIndex1
-            if (foundSubtitle1) {
-              $scope.subtitle1 = foundSubtitle1.text
+          if (newSubtitleIndex1 !== $scope.currentSubtitleIndex1) {
+            if (newSubtitleIndex1 !== -1) {
+              $scope.currentSubtitleIndex1 = newSubtitleIndex1
+              $scope.subtitle1 = $scope.subtitles1[newSubtitleIndex1]
+              $scope.subtitle1_pre = $scope.subtitle1_next = null
+              if (newSubtitleIndex1 > 0)
+                $scope.subtitle1_pre = $scope.subtitles1[newSubtitleIndex1 - 1]
+              if (newSubtitleIndex1 < $scope.subtitles1.length - 1)
+                $scope.subtitle1_next = $scope.subtitles1[newSubtitleIndex1 + 1]
+
+              // Calculate Autostop Target Time
+              if ($scope.subtitle1) {
+                const currentEnd = parseFloat($scope.subtitle1.start) + parseFloat($scope.subtitle1.dur);
+                let nextStart = 999999; // Far future if no next subtitle
+                if ($scope.subtitle1_next) {
+                  nextStart = parseFloat($scope.subtitle1_next.start);
+                }
+
+                // Stop 1 second after current ends, OR before next starts (whichever is sooner)
+                $scope.targetAutoStopTime = Math.min(currentEnd + 1.0, nextStart);
+                $scope.autoStopHandled = false; // Reset handled flag for new subtitle
+                console.log(`[Autostop] New target set: ${$scope.targetAutoStopTime} (End: ${currentEnd}, Next: ${nextStart})`);
+              } else {
+                $scope.targetAutoStopTime = -1;
+              }
+            } else {
+              $scope.subtitle1 = null
             }
-          } else if (newSubtitleIndex1 === -1) {
-            // 현재 자막이 없는 경우
-            $scope.subtitle1 = null
           }
 
-          // 두 번째 자막 트랙 업데이트
-          if (foundSubtitle2) {
-            $scope.subtitle2 = foundSubtitle2.text
-
-            // 두 번째 자막이 바뀌었을 때만 업데이트
-            if (newSubtitleIndex2 !== currentSubtitleIndex2) {
-              currentSubtitleIndex2 = newSubtitleIndex2
+          if (newSubtitleIndex2 !== $scope.currentSubtitleIndex2) {
+            if (newSubtitleIndex2 !== -1) {
+              $scope.currentSubtitleIndex2 = newSubtitleIndex2
+              $scope.subtitle2 = $scope.subtitles2[newSubtitleIndex2]
+            } else {
+              $scope.subtitle2 = null
             }
-          } else {
-            $scope.subtitle2 = null
-            currentSubtitleIndex2 = -1
           }
         }
 
@@ -265,7 +291,7 @@ angular.module('youtubeApp', ['ngCookies'])
             console.log(subtitlesList)
             if (subtitlesList) {
               $scope.subtitlesList = subtitlesList
-              fetchSubtitles()
+              // fetchSubtitles() // Removed: Subtitles are now fetched with the list
             } else
               alert('자막이 없는 영상입니다.')
           }).catch(function (error) {
@@ -278,64 +304,77 @@ angular.module('youtubeApp', ['ngCookies'])
         }
 
         async function fetchSubtitlesList(videoId) {
+          const url = `/youtube/subtitle_list/${videoId}?lang=${$scope.motherLang}&&lang2=${$scope.subLang}`;
+          console.log(`[fetchSubtitlesList] Requesting subtitle list for videoId: ${videoId}`);
+          console.log(`[fetchSubtitlesList] Mother Lang: ${$scope.motherLang}, Sub Lang: ${$scope.subLang}`);
+          console.log(`[fetchSubtitlesList] Full URL: ${url}`);
+
           try {
-            const response = await $http.get(`/youtube/caption/list/${videoId}`)
+            // 자막 목록 요청
+            const response = await $http.get(url)
 
-            console.log(response.data)
-
-            if (response.data && response.data.length > 0) {
-              return response.data
-            } else {
-              console.log('지원되는 자막 언어가 없습니다.')
+            // 응답 데이터 유효성 검사
+            if (!response.data) {
+              console.error('[fetchSubtitlesList] No response data received.');
               return null
             }
+
+            // 응답 데이터 구조 확인
+            const subtitlesList = response.data.subtitles || response.data
+            if (!Array.isArray(subtitlesList)) {
+              console.error('[fetchSubtitlesList] Invalid subtitle data format:', subtitlesList);
+              return null
+            }
+
+            if (subtitlesList.length === 0) {
+              console.warn('[fetchSubtitlesList] No subtitles found in the list.');
+              return null
+            }
+
+            // 자막 목록 처리 결과
+            console.log(`[fetchSubtitlesList] Success! Found ${subtitlesList.length} subtitles in list.`);
+
+            // 자막 데이터 처리 (서버에서 함께 반환됨)
+            if (response.data.subtitles && response.data.subtitles.length > 0) {
+              console.log(`[fetchSubtitlesList] Processing Subtitles 1 (${$scope.motherLang}). Count: ${response.data.subtitles.length}`);
+              $scope.subtitles1 = response.data.subtitles.map(sub => ({
+                start: parseFloat(sub.start),
+                dur: parseFloat(sub.dur),
+                text: sub.text
+              }));
+              currentSubtitleIndex = -1;
+              console.log(`[fetchSubtitlesList] Subtitles 1 loaded successfully.`);
+            } else {
+              console.warn(`[fetchSubtitlesList] No subtitles found for Lang1 (${$scope.motherLang}).`);
+              $scope.subtitles1 = [];
+            }
+
+            if (response.data.subtitles2 && response.data.subtitles2.length > 0) {
+              console.log(`[fetchSubtitlesList] Processing Subtitles 2 (${$scope.subLang}). Count: ${response.data.subtitles2.length}`);
+              $scope.subtitles2 = response.data.subtitles2.map(sub => ({
+                start: parseFloat(sub.start),
+                dur: parseFloat(sub.dur),
+                text: sub.text
+              }));
+              currentSubtitleIndex2 = -1;
+              console.log(`[fetchSubtitlesList] Subtitles 2 loaded successfully.`);
+            } else {
+              console.warn(`[fetchSubtitlesList] No subtitles found for Lang2 (${$scope.subLang}).`);
+              $scope.subtitles2 = [];
+            }
+
+            return subtitlesList
+
           } catch (error) {
-            console.error('자막 목록 가져오기 오류:', error)
+            console.error('[fetchSubtitlesList] Error fetching subtitle list:', error);
+            if (error.data) {
+              console.error('[fetchSubtitlesList] Error details:', error.data);
+            }
             return null
           }
         }
 
-        function fetchSubtitles() {
-          // 새로운 API를 사용하여 자막을 가져옵니다
-          $http.get(`/youtube/caption/download/${videoId}?lang=${$scope.subtitleLang1}&lang2=${$scope.subtitleLang2}`)
-            .then(function (response) {
-              if (response.data) {
-                // subtitles와 subtitles2가 이미 파싱되어 있음
-                if (response.data.subtitles && response.data.subtitles.length > 0) {
-                  // start와 dur를 문자열에서 숫자로 변환
-                  $scope.subtitles1 = response.data.subtitles.map(sub => ({
-                    start: parseFloat(sub.start),
-                    dur: parseFloat(sub.dur),
-                    text: sub.text
-                  }))
-                  currentSubtitleIndex = -1
-                  console.log($scope.subtitleLang1 + ' 자막 로드 완료')
-                } else {
-                  console.log($scope.subtitleLang1 + ' 자막이 없습니다.')
-                  $scope.subtitles1 = []
-                }
 
-                if (response.data.subtitles2 && response.data.subtitles2.length > 0) {
-                  // start와 dur를 문자열에서 숫자로 변환
-                  $scope.subtitles2 = response.data.subtitles2.map(sub => ({
-                    start: parseFloat(sub.start),
-                    dur: parseFloat(sub.dur),
-                    text: sub.text
-                  }))
-                  currentSubtitleIndex2 = -1
-                  console.log($scope.subtitleLang2 + ' 자막 로드 완료')
-                } else {
-                  console.log($scope.subtitleLang2 + ' 자막이 없습니다.')
-                  $scope.subtitles2 = []
-                }
-              }
-            })
-            .catch(function (error) {
-              console.error('자막 가져오기 오류:', error)
-              $scope.subtitles1 = []
-              $scope.subtitles2 = []
-            })
-        }
       }
 
       function togglePlay() {
@@ -400,10 +439,26 @@ angular.module('youtubeApp', ['ngCookies'])
           })
       }
 
+      function openOptionDialog() {
+        $scope.tempOptions = {
+          motherLang: $scope.motherLang,
+          subLang: $scope.subLang,
+          autostop: $scope.autostop
+        };
+        document.getElementById('option_modal').showModal();
+      }
+
       function saveOptions() {
-        $cookies.motherLang = $scope.motherLang
-        $cookies.subLang = $scope.subLang
-        closeOptionDialog()
+        $scope.motherLang = $scope.tempOptions.motherLang;
+        $scope.subLang = $scope.tempOptions.subLang;
+        $scope.autostop = $scope.tempOptions.autostop;
+
+        $cookies.motherLang = $scope.motherLang;
+        $cookies.subLang = $scope.subLang;
+        // We could save autostop to cookies too if we wanted, but not strictly requested yet.
+        // Let's stick to the plan: just update scope.
+
+        closeOptionDialog();
       }
 
       function playTTS(text, event, index) {

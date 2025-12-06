@@ -58,7 +58,7 @@ async function main() {
 
   await fastify.register(aiRoutes, { prefix: '/ai' });
   await fastify.register(sentenceRoutes, { prefix: '/sentence' });
-  await fastify.register(youtubeCaptionRoutes, { prefix: '/youtube/caption' });
+  await fastify.register(youtubeCaptionRoutes, { prefix: '/youtube' });
 
   try {
     await fastify.listen({ port, host: '0.0.0.0' });

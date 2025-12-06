@@ -1,7 +1,9 @@
+// youtube caption extractor v1.9.1 기반으로 webshare proxy 지원 추가
+
 import he from 'he';
 import striptags from 'striptags';
 import { ProxyAgent, fetch } from 'undici';
-import {cachedFetch} from "./cached_fetch.js";
+import { cachedFetch } from "./cached_fetch.js";
 
 /**
  * 환경(Node.js, Cloudflare Workers 등)에 구애받지 않고 동작하는 범용 로거를 생성합니다.
@@ -210,7 +212,7 @@ async function fetchInnerTube(endpoint: string, data: any): Promise<any> {
   }
 
   const responseData = await response.json();
-  return {data: responseData}; // axios와 유사한 응답 구조를 흉내 냅니다.
+  return { data: responseData }; // axios와 유사한 응답 구조를 흉내 냅니다.
 }
 
 /**
@@ -252,11 +254,11 @@ async function getVideoInfo(videoId: string) {
     const nextData = nextResponse.data;
     debug(` Next API response keys:`, Object.keys(nextData));
 
-    return {playerData, nextData};
+    return { playerData, nextData };
   }
 
   debug(`Player API success, status:`, playerData.playabilityStatus?.status);
-  return {playerData, nextData: null};
+  return { playerData, nextData: null };
 }
 
 /**
@@ -268,7 +270,8 @@ async function getVideoInfo(videoId: string) {
  */
 async function getTranscriptFromEngagementPanel(
   videoId: string,
-  nextData: any
+  nextData: any,
+  targetLanguage?: string
 ): Promise<Subtitle[]> {
   if (!nextData?.engagementPanels) {
     debug(` No engagement panels found`);
@@ -329,21 +332,44 @@ async function getTranscriptFromEngagementPanel(
           footer?.transcriptFooterRenderer?.languageMenu
             ?.sortFilterSubMenuRenderer?.subMenuItems
         ) {
-          // 영어 또는 현재 선택된 언어, 혹은 첫 번째 언어의 토큰을 사용합니다.
           const menuItems =
             footer.transcriptFooterRenderer.languageMenu
               .sortFilterSubMenuRenderer.subMenuItems;
-          const englishItem =
-            menuItems.find(
-              (item: any) =>
-                item?.title?.toLowerCase().includes('english') ||
-                item?.selected === true
-            ) || menuItems[0];
 
-          if (englishItem?.continuation?.reloadContinuationData?.continuation) {
-            token =
-              englishItem.continuation.reloadContinuationData.continuation;
-            break;
+          debug(` Found ${menuItems.length} language menu items`);
+
+          // 타겟 언어의 영어 이름 찾기 (예: 'ko' -> 'Korean')
+          let targetLanguageName = 'English'; // 기본값
+          if (targetLanguage) {
+            try {
+              const displayNames = new Intl.DisplayNames(['en'], { type: 'language' });
+              targetLanguageName = displayNames.of(targetLanguage) || 'English';
+              debug(` Target language: ${targetLanguage} -> ${targetLanguageName}`);
+            } catch (e) {
+              debug(` Failed to get display name for ${targetLanguage}, defaulting to English`);
+            }
+          }
+
+          // 메뉴에서 타겟 언어 또는 영어 찾기
+          const selectedItem =
+            menuItems.find((item: any) => {
+              const title = item?.title?.simpleText || item?.title?.runs?.[0]?.text || '';
+              return title.toLowerCase().includes(targetLanguageName.toLowerCase());
+            }) ||
+            menuItems.find((item: any) => {
+              const title = item?.title?.simpleText || item?.title?.runs?.[0]?.text || '';
+              return title.toLowerCase().includes('english');
+            }) ||
+            menuItems[0];
+
+          if (selectedItem) {
+            const title = selectedItem?.title?.simpleText || selectedItem?.title?.runs?.[0]?.text || 'Unknown';
+            debug(` Selected transcript language: ${title} (Target: ${targetLanguageName})`);
+
+            if (selectedItem?.continuation?.reloadContinuationData?.continuation) {
+              token = selectedItem.continuation.reloadContinuationData.continuation;
+              break;
+            }
           }
         }
       }
@@ -584,16 +610,16 @@ function extractSubtitlesList(playerData: any): SubtitleTrack[] {
  * @returns 동영상 상세 정보와 자막을 포함하는 Promise<VideoDetails>
  */
 export const getVideoDetails = async ({
-                                        videoId,
-                                        lang,
-                                        lang2,
-                                      }: Options): Promise<VideoDetails> => {
+  videoId,
+  lang,
+  lang2,
+}: Options): Promise<VideoDetails> => {
   try {
     debug(` Getting video details for ${videoId}, serverless: ${isServerless}`);
     console.log(videoId, lang, lang2)
 
     // 1. InnerTube API를 통해 동영상의 기본 정보를 가져옵니다.
-    const {playerData, nextData} = await getVideoInfo(videoId);
+    const { playerData, nextData } = await getVideoInfo(videoId);
 
     // 2. 동영상 제목과 설명을 추출합니다.
     // API 응답 구조가 다양하므로 여러 가능한 경로에서 데이터를 찾습니다.
@@ -707,8 +733,7 @@ export const getVideoDetails = async ({
 
     debug(` Video title: ${title}`);
     debug(
-      ` Video description: ${description.substring(0, 100)}${
-        description.length > 100 ? '...' : ''
+      ` Video description: ${description.substring(0, 100)}${description.length > 100 ? '...' : ''
       }`
     );
 
@@ -738,7 +763,7 @@ export const getVideoDetails = async ({
     debug(` Found ${subtitles_list.length} available subtitle tracks`);
 
     // 4. 자막을 추출합니다. (lang과 lang2를 동시에 다운로드)
-    const fetchSubtitlesForLang = async (language: string): Promise<Subtitle[]> => {
+    async function fetchSubtitlesForLang(language: string): Promise<Subtitle[]> {
       let subs: Subtitle[] = [];
 
       console.log('fetchSubtitlesForLang()', language)
@@ -746,7 +771,7 @@ export const getVideoDetails = async ({
       // 방법 1: 참여 패널(transcript API)을 통해 자막을 가져옵니다. (권장 방식)
       if (nextData) {
         try {
-          subs = await getTranscriptFromEngagementPanel(videoId, nextData);
+          subs = await getTranscriptFromEngagementPanel(videoId, nextData, language);
           if (subs.length > 0) {
             debug(
               ` Successfully got ${subs.length} subtitles from transcript API for ${language}`
@@ -781,19 +806,19 @@ export const getVideoDetails = async ({
       }
 
       return subs;
-    };
+    }
 
     // lang과 lang2의 자막을 동시에 다운로드하여 시간을 절약합니다.
     const [subtitles, subtitles2] = await Promise.all([
-      lang ? fetchSubtitlesForLang(lang) : Promise.resolve(null),
-      lang2 ? fetchSubtitlesForLang(lang2) : Promise.resolve(null),
+      (lang && lang != 'undefined') ? fetchSubtitlesForLang(lang) : Promise.resolve(undefined),
+      (lang2 && lang2 != 'undefined') ? fetchSubtitlesForLang(lang2) : Promise.resolve(undefined),
     ]);
 
     return {
       title,
-      description,
-      ...(subtitles && {subtitles}),
-      ...(subtitles2 && {subtitles2}),
+      description, subtitles, subtitles2,
+      //...(subtitles && {subtitles}),
+      //...(subtitles2 && {subtitles2}),
       subtitles_list,
     };
   } catch (error) {
@@ -808,15 +833,15 @@ export const getVideoDetails = async ({
  * @returns 자막(Subtitle) 객체의 배열을 담은 Promise (lang과 lang2가 모두 지정된 경우, lang2는 무시됩니다.)
  */
 export const getSubtitles = async ({
-                                     videoId,
-                                     lang = 'en',
-                                     lang2, // lang2는 현재 getSubtitles 함수에서는 사용되지 않지만, Options 인터페이스에 포함되어 있습니다.
-                                   }: Options): Promise<{ subtitles: Subtitle[], subtitles2?: Subtitle[] }> => {
+  videoId,
+  lang = 'en',
+  lang2, // lang2는 현재 getSubtitles 함수에서는 사용되지 않지만, Options 인터페이스에 포함되어 있습니다.
+}: Options): Promise<{ subtitles: Subtitle[] | null, subtitles2?: Subtitle[] | null }> => {
   try {
     debug(` Getting subtitles for ${videoId}, serverless: ${isServerless}`);
     console.log(videoId, lang, lang2)
 
-    const {playerData, nextData} = await getVideoInfo(videoId);
+    const { playerData, nextData } = await getVideoInfo(videoId);
 
     const fetchSubtitlesForLang = async (language: string): Promise<Subtitle[]> => {
       let subs: Subtitle[] = [];
@@ -852,12 +877,12 @@ export const getSubtitles = async ({
 
     if (lang2) {
       const [subtitles, subtitles2] = await Promise.all([
-        fetchSubtitlesForLang(lang),
-        fetchSubtitlesForLang(lang2),
+        (lang && lang != 'undefined') ? fetchSubtitlesForLang(lang) : Promise.resolve(null),
+        (lang2 && lang2 != 'undefined') ? fetchSubtitlesForLang(lang2) : Promise.resolve(null)
       ]);
-      return {subtitles, subtitles2};
+      return { subtitles, subtitles2 };
     } else {
-      return {subtitles: await fetchSubtitlesForLang(lang)};
+      return { subtitles: await fetchSubtitlesForLang(lang) };
     }
   } catch (error) {
     debug('Error getting subtitles:', error);

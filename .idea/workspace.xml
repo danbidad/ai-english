@@ -6,28 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="73d49ff5-ff5a-4348-8d93-b0e703a33e55" name="변경" comment="중간버젼">
       <change beforePath="$PROJECT_DIR$/.aiassistant/rules/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/.aiassistant/rules/AGENTS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aiignore" beforeDir="false" afterPath="$PROJECT_DIR$/.aiignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/server/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.junie/rules.md" beforeDir="false" afterPath="$PROJECT_DIR$/.junie/rules.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jest.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/jest.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/prompt.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/prompt.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/sentence.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/sentence.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prompt.txt" beforeDir="false" afterPath="$PROJECT_DIR$/prompt.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/youtube.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/youtube.html.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/youtube.html.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube.html.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes/ai.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/ai.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/jest.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/jest.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/youtube_caption.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/youtube_caption.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routes/youtube_caption.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/youtube_caption.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/usage_db/usagedb.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/usage_db/usagedb.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/usage_db/usagedb_sqlite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/usage_db/usagedb_sqlite.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/utils/cached_fetch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/cached_fetch.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/utils/youtube_caption.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/youtube_caption.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/utils/youtube_caption.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/youtube_caption.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +94,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
@@ -125,7 +118,7 @@
     &quot;npm.tailwind.executor&quot;: &quot;Run&quot;,
     &quot;npm.test.executor&quot;: &quot;Run&quot;,
     &quot;npm.test.js.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;junie.allowlist&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.android.studio.ml.bot.mainConfigurable&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\pocke\\PhpstormProjects\\ai-test\\server\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -148,11 +141,11 @@
       <recent name="C:\Users\pocke\PhpstormProjects\ai-test\server" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pocke\PhpstormProjects\ai-test\public" />
       <recent name="C:\Users\pocke\PhpstormProjects\ai-test\server" />
       <recent name="C:\Users\pocke\PhpstormProjects\ai-test\public\tailwind" />
       <recent name="C:\Users\pocke\PhpstormProjects\ai-test\server\routes" />
       <recent name="C:\Users\pocke\PhpstormProjects\ai-test\server\old" />
-      <recent name="$PROJECT_DIR$/public/css" />
     </key>
     <key name="es6.move.members.recent.items">
       <recent name="F:\PhpstormProjects\ai-test\src\tts.ts" />
@@ -205,8 +198,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.dev" />
-        <item itemvalue="npm.tailwind (1)" />
         <item itemvalue="npm.tailwind" />
+        <item itemvalue="npm.tailwind (1)" />
         <item itemvalue="npm.start" />
         <item itemvalue="Node.js.youtube_transcript_fetcher.ts" />
       </list>
@@ -215,8 +208,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PS-252.26830.95" />
-        <option value="bundled-php-predefined-a98d8de5180a-9b563d34894c-com.jetbrains.php.sharedIndexes-PS-252.26830.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-PS-252.28238.9" />
+        <option value="bundled-php-predefined-a98d8de5180a-58f58c5035b3-com.jetbrains.php.sharedIndexes-PS-252.28238.9" />
       </set>
     </attachedChunks>
   </component>
@@ -495,6 +488,45 @@
       <workItem from="1761112179838" duration="653000" />
       <workItem from="1761114496004" duration="4461000" />
       <workItem from="1761122276975" duration="2198000" />
+      <workItem from="1761279608027" duration="3394000" />
+      <workItem from="1761612956327" duration="1390000" />
+      <workItem from="1761637307504" duration="2409000" />
+      <workItem from="1761732533059" duration="3029000" />
+      <workItem from="1761881311604" duration="2939000" />
+      <workItem from="1762065419855" duration="1410000" />
+      <workItem from="1762163250322" duration="3151000" />
+      <workItem from="1762218772065" duration="1136000" />
+      <workItem from="1762220572729" duration="5946000" />
+      <workItem from="1762320320384" duration="286000" />
+      <workItem from="1762320692425" duration="402000" />
+      <workItem from="1762333577382" duration="1466000" />
+      <workItem from="1762338422374" duration="1501000" />
+      <workItem from="1762669679579" duration="2598000" />
+      <workItem from="1762752356628" duration="2609000" />
+      <workItem from="1762762538200" duration="1661000" />
+      <workItem from="1762825631425" duration="175000" />
+      <workItem from="1762842252394" duration="2933000" />
+      <workItem from="1763010366940" duration="993000" />
+      <workItem from="1763093456330" duration="3095000" />
+      <workItem from="1763352974404" duration="363000" />
+      <workItem from="1763599120578" duration="1994000" />
+      <workItem from="1763692667862" duration="947000" />
+      <workItem from="1763701925377" duration="1152000" />
+      <workItem from="1763704773360" duration="628000" />
+      <workItem from="1763707262857" duration="617000" />
+      <workItem from="1763723512031" duration="1663000" />
+      <workItem from="1763964911847" duration="337000" />
+      <workItem from="1763965310645" duration="12269000" />
+      <workItem from="1764134665583" duration="9773000" />
+      <workItem from="1764228340262" duration="2178000" />
+      <workItem from="1764308092498" duration="2610000" />
+      <workItem from="1764326836527" duration="1037000" />
+      <workItem from="1764329364586" duration="3556000" />
+      <workItem from="1764384753200" duration="2404000" />
+      <workItem from="1764440991818" duration="60000" />
+      <workItem from="1764441083353" duration="1278000" />
+      <workItem from="1764476785132" duration="7041000" />
+      <workItem from="1764649670103" duration="12420000" />
     </task>
     <task id="LOCAL-00001" summary="시작">
       <option name="closed" value="true" />
@@ -528,7 +560,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760234519311</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="중간버젼">
+      <option name="closed" value="true" />
+      <created>1761279659444</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1761279659444</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
