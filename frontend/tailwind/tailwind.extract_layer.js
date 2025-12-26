@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 const searchDir = path.resolve(__dirname, '..');
 
 // 결과를 저장할 파일 경로
-const outputFile = path.resolve(__dirname, '../tailwind/tailwind_temp.css');
+const outputFile = path.resolve(__dirname, 'tailwind_temp.css');
 
 // <style type="text/tailwindcss"> 태그의 내용을 찾기 위한 정규식
 const regex = /<style type="text\/tailwindcss">([\s\S]*?)<\/style>/g;

@@ -2,11 +2,8 @@ import Fastify from 'fastify';
 import fastifyCors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';
 import fastifySession from '@fastify/session';
-import fastifyStatic from '@fastify/static';
 import fastifyFormbody from '@fastify/formbody';
-import { join } from 'path';
 import dotenv from 'dotenv';
-import {__filename__dirname} from "./utils/filename.js";
 import aiRoutes from './routes/ai.js';
 import sentenceRoutes from "./routes/sentence.js";
 import { youtubeCaptionRoutes } from './routes/youtube_caption.js';
@@ -17,7 +14,7 @@ import { youtubeCaptionRoutes } from './routes/youtube_caption.js';
 dotenv.config();
 console.log("LOAD ENV OK")
 
-const {__filename, __dirname} = __filename__dirname(import.meta.url)
+// 서버에서 정적 파일을 서빙하지 않으므로 __dirname 계산 불필요
 
 async function main() {
   const port = 3000;
@@ -51,10 +48,6 @@ async function main() {
   });
 
   await fastify.register(fastifyFormbody);
-  await fastify.register(fastifyStatic, {
-    root: join(__dirname, '../public'),
-    prefix: '/',
-  });
 
   await fastify.register(aiRoutes, { prefix: '/ai' });
   await fastify.register(sentenceRoutes, { prefix: '/sentence' });

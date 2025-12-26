@@ -44,7 +44,7 @@ async function listCaptionsHandler(request: ListRequest, reply: FastifyReply) {
 
 /**
  * '/details/:videoId' 경로의 핸들러 함수입니다.
- * 동영상 상세 정보와 자막을 함께 조회합니다.
+ * 동영상 상세 정보와 자막을 함께 조회합니다.https://www.youtube.com/watch?v=gzprp_Qufg4
  * @param request - Fastify 요청 객체
  * @param reply - Fastify 응답 객체
  */
