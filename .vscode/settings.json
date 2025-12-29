@@ -1,0 +1,14 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.idea": true,
+        "**/.aiassistant": true,
+        "**/.junie": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true,
+        "**/*.mmd": true,
+        "AGENTS.md": true,
+        ".aiignore": true,
+        ".gitignore": true,
+    }
+}

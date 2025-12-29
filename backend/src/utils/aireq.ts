@@ -1,9 +1,9 @@
-import {ChatAnthropic} from "@langchain/anthropic";
-import {ChatOpenAI} from "@langchain/openai";
-import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
-import {AIMessage, HumanMessage, SystemMessage} from '@langchain/core/messages';
+import { ChatAnthropic } from "@langchain/anthropic";
+import { ChatOpenAI } from "@langchain/openai";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { AIMessage, HumanMessage, SystemMessage } from '@langchain/core/messages';
 import dotenv from "dotenv";
-import {UsageDB} from "../usage_db/usagedb.js";
+import { UsageDB } from "../../db/usage/usagedb.js";
 
 dotenv.config();
 
@@ -72,7 +72,7 @@ export const models: { [key: string]: any } = {
   }
 }
 
-export async function queryToAI({model, systemPrompt, prompt, files, prev_messages, chatmode}: {
+export async function queryToAI({ model, systemPrompt, prompt, files, prev_messages, chatmode }: {
   model?,
   systemPrompt?: string,
   prompt?: string,
@@ -90,7 +90,7 @@ export async function queryToAI({model, systemPrompt, prompt, files, prev_messag
     console.log(model, '모델을 찾을 수 없습니다 디폴트 모델을 사용합니다')
     modelInfo = models['gemini-2.0-flash']
   }
-  const apiKey = await UsageDB.getAPIKey(modelInfo.type, modelInfo.name, {preferFree: true})
+  const apiKey = await UsageDB.getAPIKey(modelInfo.type, modelInfo.name, { preferFree: true })
   const chatmodel = new modelInfo.chatmodel({
     apiKey: apiKey,
     model: modelInfo.name,
@@ -101,7 +101,7 @@ export async function queryToAI({model, systemPrompt, prompt, files, prev_messag
 
   if (files && files.length > 0) {
     const content: any[] = [];
-    if (prompt) content.push({type: 'text', text: prompt});
+    if (prompt) content.push({ type: 'text', text: prompt });
     for (const f of files) {
       content.push({
         type: 'image_url',
@@ -109,7 +109,7 @@ export async function queryToAI({model, systemPrompt, prompt, files, prev_messag
         filename: f.filename,
       });
     }
-    messages.push(new HumanMessage({content}));
+    messages.push(new HumanMessage({ content }));
   } else {
     messages.push(new HumanMessage(prompt || ''));
   }
@@ -152,9 +152,9 @@ export async function aireq(option: {
 
     let messages = option.messages
     if (!messages) {
-      messages = [{role: "user", content: option.message!}];
+      messages = [{ role: "user", content: option.message! }];
       if (option.rule) {
-        messages.unshift({role: "system", content: option.rule});
+        messages.unshift({ role: "system", content: option.rule });
       }
     }
 

@@ -5,21 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73d49ff5-ff5a-4348-8d93-b0e703a33e55" name="변경" comment="중간버젼">
-      <change beforePath="$PROJECT_DIR$/.aiassistant/rules/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/.aiassistant/rules/AGENTS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.junie/rules.md" beforeDir="false" afterPath="$PROJECT_DIR$/.junie/rules.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompt.txt" beforeDir="false" afterPath="$PROJECT_DIR$/prompt.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/youtube.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/youtube.html.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/youtube.html.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/jest.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/jest.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes/youtube_caption.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/youtube_caption.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes/youtube_caption.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/youtube_caption.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/utils/youtube_caption.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/youtube_caption.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/utils/youtube_caption.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/youtube_caption.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/usage_db/keys.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/usage_db/reset_usage.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/usage_db/schema.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/usage_db/usagedb.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/usage_db/usagedb_sqlite.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/utils/aireq.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/utils/aireq.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +54,7 @@
     <file url="file://$USER_HOME$/AppData/Local/Temp/whats-new-dir/whats-new.http" environment="test" />
   </component>
   <component name="PackageJsonUpdateNotifier">
-    <dismissed value="$PROJECT_DIR$/server/package.json" />
+    <dismissed value="$PROJECT_DIR$/backend/package.json" />
   </component>
   <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
@@ -78,64 +71,66 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;HTTP 요청.test | #1.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP 요청.test | #2.executor&quot;: &quot;Run&quot;,
-    &quot;Jest.YouTubeTranscriptApi.getTranscript.executor&quot;: &quot;Run&quot;,
-    &quot;Jest.YouTubeTranscriptApi.listTranscripts.executor&quot;: &quot;Run&quot;,
-    &quot;Jest.YouTubeTranscriptApi.listTranscripts.비디오 ID로 자막 목록을 가져와야 함.executor&quot;: &quot;Debug&quot;,
-    &quot;Jest.__tests__/ 내 테스트.executor&quot;: &quot;Run&quot;,
-    &quot;Jest.transcript/ 내 테스트.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Node.js.tokenizer.ts.executor&quot;: &quot;Debug&quot;,
-    &quot;Node.js.youtube_transcript_fetcher.ts.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/pocke/PhpstormProjects/ai-test/.junie&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;F:/PhpstormProjects/ai-test/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.build.executor&quot;: &quot;Debug&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Debug&quot;,
-    &quot;npm.jest.executor&quot;: &quot;Run&quot;,
-    &quot;npm.start (1).executor&quot;: &quot;Run&quot;,
-    &quot;npm.start (2).executor&quot;: &quot;Run&quot;,
-    &quot;npm.start (3).executor&quot;: &quot;Run&quot;,
-    &quot;npm.start.executor&quot;: &quot;Run&quot;,
-    &quot;npm.tailwind (1).executor&quot;: &quot;Run&quot;,
-    &quot;npm.tailwind.executor&quot;: &quot;Run&quot;,
-    &quot;npm.test.executor&quot;: &quot;Run&quot;,
-    &quot;npm.test.js.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.android.studio.ml.bot.mainConfigurable&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\pocke\\PhpstormProjects\\ai-test\\server\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "HTTP 요청.test | #1.executor": "Run",
+    "HTTP 요청.test | #2.executor": "Run",
+    "Jest.YouTubeTranscriptApi.getTranscript.executor": "Run",
+    "Jest.YouTubeTranscriptApi.listTranscripts.executor": "Run",
+    "Jest.YouTubeTranscriptApi.listTranscripts.비디오 ID로 자막 목록을 가져와야 함.executor": "Debug",
+    "Jest.__tests__/ 내 테스트.executor": "Run",
+    "Jest.transcript/ 내 테스트.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.tokenizer.ts.executor": "Debug",
+    "Node.js.youtube_transcript_fetcher.ts.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/pocke/PhpstormProjects/ai-test/public",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "F:/PhpstormProjects/ai-test/node_modules/jest",
+    "nodejs_package_manager_path": "npm",
+    "npm.build.executor": "Debug",
+    "npm.dev (1).executor": "Run",
+    "npm.dev (2).executor": "Run",
+    "npm.dev.executor": "Debug",
+    "npm.jest.executor": "Run",
+    "npm.start (1).executor": "Run",
+    "npm.start (2).executor": "Run",
+    "npm.start (3).executor": "Run",
+    "npm.start.executor": "Run",
+    "npm.tailwind (1).executor": "Run",
+    "npm.tailwind.executor": "Run",
+    "npm.test.executor": "Run",
+    "npm.test.js.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "C:\\Users\\pocke\\PhpstormProjects\\ai-test\\backend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
     ],
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/&quot;: [
-      &quot;SQLite&quot;
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
+      "SQLite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\pocke\PhpstormProjects\ai-test\.junie" />
       <recent name="C:\Users\pocke\PhpstormProjects\ai-test\public" />
+      <recent name="C:\Users\pocke\PhpstormProjects\ai-test\.junie" />
       <recent name="C:\Users\pocke\PhpstormProjects\ai-test\server\usage_db" />
       <recent name="C:\Users\pocke\PhpstormProjects\ai-test" />
       <recent name="C:\Users\pocke\PhpstormProjects\ai-test\server" />
@@ -151,8 +146,25 @@
       <recent name="F:\PhpstormProjects\ai-test\src\tts.ts" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
-    <configuration name="youtube_transcript_fetcher.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/transcript/test/youtube_transcript_fetcher.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/server/transcript/test">
+  <component name="RunManager" selected="npm.dev (2)">
+    <configuration name="dev (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev (2)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/frontend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -165,21 +177,11 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
+    <configuration name="start (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/frontend/package.json" />
       <command value="run" />
       <scripts>
         <script value="start" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="tailwind (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/public/tailwind/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="tailwind" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -197,11 +199,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev (2)" />
+        <item itemvalue="npm.start (1)" />
+        <item itemvalue="npm.dev (1)" />
         <item itemvalue="npm.dev" />
         <item itemvalue="npm.tailwind" />
-        <item itemvalue="npm.tailwind (1)" />
-        <item itemvalue="npm.start" />
-        <item itemvalue="Node.js.youtube_transcript_fetcher.ts" />
       </list>
     </recent_temporary>
   </component>
@@ -527,6 +529,13 @@
       <workItem from="1764441083353" duration="1278000" />
       <workItem from="1764476785132" duration="7041000" />
       <workItem from="1764649670103" duration="12420000" />
+      <workItem from="1764996266176" duration="3836000" />
+      <workItem from="1765623837890" duration="225000" />
+      <workItem from="1765624924874" duration="2210000" />
+      <workItem from="1765644311675" duration="167000" />
+      <workItem from="1766598834892" duration="2022000" />
+      <workItem from="1766649953112" duration="3418000" />
+      <workItem from="1766746251143" duration="2432000" />
     </task>
     <task id="LOCAL-00001" summary="시작">
       <option name="closed" value="true" />
@@ -568,16 +577,35 @@
       <option name="project" value="LOCAL" />
       <updated>1761279659444</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="중간버젼">
+      <option name="closed" value="true" />
+      <created>1764996289548</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1764996289548</updated>
+    </task>
+    <task id="LOCAL-00007" summary="중간버젼">
+      <option name="closed" value="true" />
+      <created>1764996310953</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1764996310953</updated>
+    </task>
+    <task id="LOCAL-00008" summary="중간버젼">
+      <option name="closed" value="true" />
+      <created>1766746428988</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1766746428988</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-    <option name="exactExcludedFiles">
-      <list>
-        <option value="$PROJECT_DIR$/server/utils/youtube_caption.d.ts" />
-      </list>
-    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -615,7 +643,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/server/utils/cached_fetch.ts</url>
+          <url>file://$PROJECT_DIR$/backend/utils/cached_fetch.ts</url>
           <line>14</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>

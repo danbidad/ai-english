@@ -1,4 +1,4 @@
-import {UsageDB} from "./usagedb.js";
+import { UsageDB } from "./usagedb.js";
 
 export function SetScheduleResetUsageDB() {
   // 다음 미국 태평양 자정까지 대기 후 매일 24시간마다 실행

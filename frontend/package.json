@@ -5,9 +5,9 @@
   "description": "Vue 3 + Vite frontend for ai-test",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "f:dev": "vite",
+    "f:build": "vite build",
+    "f:preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.7.7",

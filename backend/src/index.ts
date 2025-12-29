@@ -12,13 +12,14 @@ import { youtubeCaptionRoutes } from './routes/youtube_caption.js';
 // const SQLiteStoreSession = SQLiteStore(session);
 
 dotenv.config();
-console.log("LOAD ENV OK")
+console.log(process.env)
 
 // 서버에서 정적 파일을 서빙하지 않으므로 __dirname 계산 불필요
 
 async function main() {
   const port = 3000;
-  const fastify = Fastify({ logger: {
+  const fastify = Fastify({
+    logger: {
       level: 'info',
       transport: {
         target: 'pino-pretty',
@@ -28,7 +29,8 @@ async function main() {
           translateTime: 'SYS:standard',
         },
       },
-    }, bodyLimit: 50 * 1024 * 1024 });
+    }, bodyLimit: 50 * 1024 * 1024
+  });
 
   // 미들웨어 설정
   await fastify.register(fastifyCors, {
