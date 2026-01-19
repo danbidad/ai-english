@@ -1,10 +1,8 @@
 import axios from 'axios';
-import * as dotenv from "dotenv";
-import {models, queryToAI} from "../utils/aireq.js";
+import { models, queryToAI } from "../utils/aireq.js";
 import { DallEAPIWrapper } from "@langchain/openai";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
-dotenv.config();
 console.log(process.env.ANTHROPIC_API_KEY);
 
 // Fastify 스타일 라우터 등록 함수
@@ -16,7 +14,7 @@ async function aiRoutes(fastify: FastifyInstance) {
   ) => {
     try {
       const { message, rule, model } = request.body || {} as any;
-      const response = await queryToAI({prompt: message, systemPrompt: rule, model: model})
+      const response = await queryToAI({ prompt: message, systemPrompt: rule, model: model })
       return reply.send({ response: response.content });
     } catch (error) {
       console.error('Error:', error);

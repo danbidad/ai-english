@@ -5,6 +5,7 @@
     <div class="flex gap-2 mt-4">
       <RouterLink to="/youtube" class="btn btn-primary">YouTube 도구</RouterLink>
       <RouterLink to="/sentence" class="btn btn-secondary">문장 분석</RouterLink>
+      <RouterLink to="/tts" class="btn btn-secondary">TTS</RouterLink>
     </div>
   </section>
 </template>

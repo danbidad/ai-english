@@ -8,7 +8,6 @@
         "**/node_modules": true,
         "**/*.mmd": true,
         "AGENTS.md": true,
-        ".aiignore": true,
-        ".gitignore": true,
+        ".aiignore": true
     }
 }

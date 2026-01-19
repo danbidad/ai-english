@@ -8,6 +8,7 @@
         <div class="flex-none gap-2">
           <RouterLink to="/youtube" class="btn btn-ghost">YouTube</RouterLink>
           <RouterLink to="/sentence" class="btn btn-ghost">Sentence</RouterLink>
+          <RouterLink to="/tts" class="btn btn-ghost">TTS</RouterLink>          
         </div>
       </div>
     </div>

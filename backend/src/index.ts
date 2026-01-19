@@ -1,9 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config(); // 맨 처음에 해야만 한다
+
 import Fastify from 'fastify';
 import fastifyCors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';
 import fastifySession from '@fastify/session';
 import fastifyFormbody from '@fastify/formbody';
-import dotenv from 'dotenv';
 import aiRoutes from './routes/ai.js';
 import sentenceRoutes from "./routes/sentence.js";
 import { youtubeCaptionRoutes } from './routes/youtube_caption.js';
@@ -11,8 +13,6 @@ import { youtubeCaptionRoutes } from './routes/youtube_caption.js';
 // import SQLiteStore from 'connect-sqlite3';
 // const SQLiteStoreSession = SQLiteStore(session);
 
-dotenv.config();
-console.log(process.env)
 
 // 서버에서 정적 파일을 서빙하지 않으므로 __dirname 계산 불필요
 
@@ -20,7 +20,7 @@ async function main() {
   const port = 3000;
   const fastify = Fastify({
     logger: {
-      level: 'info',
+      level: 'warn',
       transport: {
         target: 'pino-pretty',
         options: {

@@ -1,0 +1,23 @@
+services:
+  ai-english-backend:
+    container_name: ai-english-backend
+    build: ./backend
+    ports:
+      - "3000:3000"
+      - "9300:9300"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=file:./sqlite.db
+
+  ai-english-frontend:
+    container_name: ai-english-frontend
+    build: ./frontend
+    ports:
+      - "5174:5174"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - ai-english-backend
