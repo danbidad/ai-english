@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
-dotenv.config(); // 맨 처음에 해야만 한다
+dotenv.config({ path: '.env.local' }); // 맨 처음에 해야만 한다
+dotenv.config({ path: '.env' }); // 맨 처음에 해야만 한다
 
 import Fastify from 'fastify';
 import fastifyCors from '@fastify/cors';

@@ -5,8 +5,6 @@ import { AIMessage, HumanMessage, SystemMessage } from '@langchain/core/messages
 import dotenv from "dotenv";
 import { UsageDB } from "../../db/usage/usagedb.js";
 
-dotenv.config();
-
 type AIType = 'openai' | 'anthropic' | 'google';
 
 class AIAttachedFile {
@@ -90,7 +88,11 @@ export async function queryToAI({ model, systemPrompt, prompt, files, prev_messa
     console.log(model, '모델을 찾을 수 없습니다 디폴트 모델을 사용합니다')
     modelInfo = models['gemini-2.0-flash']
   }
-  const apiKey = await UsageDB.getAPIKey(modelInfo.type, modelInfo.name, { preferFree: true })
+  let apiKey = await UsageDB.getAPIKey(modelInfo.type, modelInfo.name, { preferFree: true })
+  console.log(apiKey)
+  console.log(process.env.GEMINI_API_KEY)
+  apiKey = process.env.GEMINI_API_KEY
+
   const chatmodel = new modelInfo.chatmodel({
     apiKey: apiKey,
     model: modelInfo.name,
