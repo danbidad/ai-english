@@ -1,5 +1,5 @@
 import { sql, eq, and, asc, desc, or, gt } from 'drizzle-orm';
-import { db } from '../index.js';
+import { usagedb as db } from '../index.js';
 import { apiKeys, apiKeyUsages, dailyUsageArchive, monthlyUsageArchive, weeklyUsageArchive } from './schema.js';
 import { readFileSync } from "node:fs";
 import * as path from "node:path";

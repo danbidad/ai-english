@@ -9,7 +9,8 @@ services:
       - ./backend:/app
       - /app/node_modules
     environment:
-      - DATABASE_URL=file:./sqlite.db
+      - DATABASE_URL=file:./data/usagedb.sqlite
+      - CACHE_DATABASE_URL=file:./data/cachedb.sqlite
 
   ai-english-frontend:
     container_name: ai-english-frontend

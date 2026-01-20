@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' }); // 맨 처음에 해야만 한다
-dotenv.config({ path: '.env' }); // 맨 처음에 해야만 한다
-
+import './prestart.js';
 import Fastify from 'fastify';
 import fastifyCors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';

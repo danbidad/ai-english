@@ -1,5 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { getSubtitles, getVideoDetails } from '../utils/youtube_caption.js';
+import ytsr from 'ytsr';
 
 // 요청 파라미터 및 쿼리스티링에 대한 타입을 정의하여 타입 안정성을 강화합니다.
 type ListRequest = FastifyRequest<{ Params: { videoId: string }, Querystring: { lang?: string, lang2?: string } }>;
@@ -102,6 +103,33 @@ async function downloadCaptionsHandler(request: DownloadRequest, reply: FastifyR
 }
 
 /**
+ * '/search' 경로의 핸들러 함수입니다.
+ * 유튜브 영상을 검색합니다.
+ * @param request - Fastify 요청 객체
+ * @param reply - Fastify 응답 객체
+ */
+async function searchHandler(request: FastifyRequest<{ Querystring: { q: string } }>, reply: FastifyReply) {
+  try {
+    const { q } = request.query;
+    if (!q) {
+      return reply.code(400).send({ error: 'Query parameter q is required' });
+    }
+
+    const filters = await ytsr.getFilters(q);
+    const filter = filters.get('Type')?.get('Video');
+    const searchResults = await ytsr(filter?.url || q, { limit: 10 });
+
+    return reply.send(searchResults);
+  } catch (error: any) {
+    console.error('Error searching videos:', error);
+    return reply.code(500).send({
+      error: 'Failed to search videos',
+      details: error.message
+    });
+  }
+}
+
+/**
  * YouTube 자막 관련 라우트를 Fastify 인스턴스에 등록합니다.
  * '/youtube/caption' 경로가 이 라우트들 앞에 추가됩니다.
  * @param fastify - Fastify 인스턴스
@@ -115,4 +143,7 @@ export async function youtubeCaptionRoutes(fastify: FastifyInstance) {
 
   // 동영상의 자막 데이터만 다운로드하는 라우트
   fastify.get('/subtitles/:videoId', downloadCaptionsHandler);
+
+  // 유튜브 영상 검색 라우트
+  fastify.get('/search', searchHandler);
 }

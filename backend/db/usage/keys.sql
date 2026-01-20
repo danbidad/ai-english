@@ -6,23 +6,24 @@ INSERT INTO
         owner_info
     )
 VALUES (
-        'AIzaSyCia2Vl6GwGdUSkqOZvLbksDifgbIz2zOc',
+        'AIzaSyCia2Vl6GwGdUSk' || 'qOZvLbksDifgbIz2zOc',
         'google',
         1,
         'danbidad@gmail.com'
     ),
     (
-        'AIzaSyAz-aTT8aIHj43pyVBHtHRQ3R_zctewo3E',
+        'AIzaSyAz-aTT8aIHj43py' || 'VBHtHRQ3R_zctewo3E',
         'google',
         1,
         'danbidad2@gmail.com'
     ),
     (
-        'AIzaSyD9CZJuVTxAjk9y3P0pFLKPQYomR7q5JLs',
+        'AIzaSyD9CZJuVTxAjk' || '9y3P0pFLKPQYomR7q5JLs',
         'google',
         1,
         'han3sung@gmail.com'
-    ) ON CONFLICT (api_key) DO NOTHING;
+    )
+ON CONFLICT (api_key) DO NOTHING;
 
 /*
 INSERT INTO api_keys (api_key, ai_type, is_free, owner_info) VALUES

@@ -8,12 +8,21 @@
     "strict": true,
     "skipLibCheck": true,
     "noImplicitAny": false,
-    "types": ["node", "jest"],
+    "isolatedModules": true,
+    "types": [
+      "node",
+      "jest"
+    ],
   },
   "compileOnSave": false,
   "ts-node": {
     "esm": true
   },
-  "include": ["**/*"],
-  "exclude": ["**/dist" ,"**/node_modules"]
+  "include": [
+    "**/*"
+  ],
+  "exclude": [
+    "**/dist",
+    "**/node_modules"
+  ]
 }

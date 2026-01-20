@@ -1,12 +1,17 @@
 {
   "type": "module",
   "scripts": {
-    "b:start": "tsx index.ts",
+    "b:start": "tsx src/index.ts",
     "b:dev": "nodemon --watch src --ext ts,js --exec tsx src/index.ts",
-    "b:jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-    "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "b:jest": "tsx --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "db:usage:generate": "drizzle-kit generate --config=drizzle.usage.config.ts",
+    "db:usage:push": "drizzle-kit push --config=drizzle.usage.config.ts",
+    "db:usage:studio": "drizzle-kit studio --config=drizzle.usage.config.ts",
+    "db:cache:generate": "drizzle-kit generate --config=drizzle.cache.config.ts",
+    "db:cache:push": "drizzle-kit push --config=drizzle.cache.config.ts",
+    "db:cache:studio": "drizzle-kit studio --config=drizzle.cache.config.ts",
+    "db:generate": "npm run db:usage:generate && npm run db:cache:generate",
+    "db:push": "npm run db:usage:push && npm run db:cache:push"
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.2",
@@ -31,7 +36,8 @@
     "striptags": "^3.2.0",
     "tsx": "^4.19.4",
     "typescript": "^5.3.3",
-    "undici": "^7.16.0"
+    "undici": "^7.16.0",
+    "ytsr": "^3.8.4"
   },
   "devDependencies": {
     "@types/argparse": "^2.0.17",
