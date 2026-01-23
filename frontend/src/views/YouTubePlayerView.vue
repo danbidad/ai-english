@@ -103,7 +103,7 @@ async function loadDetails() {
   try {
     const params: Record<string, string> = { lang: lang1.value }
     if (lang2.value) params.lang2 = lang2.value
-    const { data } = await api.get(`/youtube/caption/details/${encodeURIComponent(videoId)}`, { params })
+    const { data } = await api.get(`/youtube/info/${encodeURIComponent(videoId)}`, { params })
     // 예상 응답 구조에 맞게 매핑 (utils/youtube_caption.ts를 참고했을 때 title/description/subtitles 형태 가정)
     details.value = { title: data.title ?? data.video?.title ?? '제목 없음', description: data.description ?? data.video?.description }
     captions.value = (data.subtitles ?? data.captions ?? []).map((c: any) => ({

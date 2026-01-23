@@ -5,7 +5,7 @@
         "**/.aiassistant": true,
         "**/.junie": true,
         "**/.DS_Store": true,
-        "**/node_modules": true,
+        //        "**/node_modules": true,
         "**/*.mmd": true,
         "AGENTS.md": true,
         ".aiignore": true

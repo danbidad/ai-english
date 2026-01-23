@@ -1,5 +1,3 @@
-import {getSubtitles} from "youtube-caption-extractor";
-import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import axios from "axios";
 
 class ProxyRotator {
@@ -25,6 +23,8 @@ class ProxyRotator {
     }
     const proxy = this.proxies[this.index % this.proxies.length];
     this.index = (this.index + 1) % (1 << 30);
+
+    console.log(`getNext(): ${proxy}`)
     return proxy;
   }
 
@@ -36,14 +36,14 @@ class ProxyRotator {
 export const proxyRotator = new ProxyRotator();
 
 const WEBSHARE_API_KEY_LIST = [
-  "uwuwdr1kheu7a0tq6avjm3yq64onpsctx1eh0ru9", // danbidad@gmail.com
-  "3judf9mc4p9hu2lx71eenooni2wakfswkgz9tpqt"  // danbidad2@gmail.com
+  'uwuwdr1kheu7a0tq' + '6avjm3yq64onpsctx1eh0ru9', // danbidad@gmail.com
+  '3judf9mc4p9hu2lx71eenooni' + '2wakfswkgz9tpqt'  // danbidad2@gmail.com
 ]
 const WEBSHARE_API_BASE = 'https://proxy.webshare.io/api/v2/proxy/list/';
 
 // Fetch proxies from Webshare API
 async function fetchWebshareProxies(): Promise<string[]> {
-  if (!WEBSHARE_API_KEY_LIST || WEBSHARE_API_KEY_LIST?.length < 1 ) {
+  if (!WEBSHARE_API_KEY_LIST || WEBSHARE_API_KEY_LIST?.length < 1) {
     console.warn('WEBSHARE_API_KEY not set, running without proxies');
     return [];
   }
@@ -51,13 +51,13 @@ async function fetchWebshareProxies(): Promise<string[]> {
   const proxies: string[] = [];
   let page = 1;
 
-  for ( var key_idx=0 ; key_idx<WEBSHARE_API_KEY_LIST.length ; key_idx++) {
-    const headers = {Authorization: `Token ${WEBSHARE_API_KEY_LIST[0]}`};
+  for (var key_idx = 0; key_idx < WEBSHARE_API_KEY_LIST.length; key_idx++) {
+    const headers = { Authorization: `Token ${WEBSHARE_API_KEY_LIST[key_idx]}` };
 
     try {
       while (true) {
         const response = await axios.get(WEBSHARE_API_BASE, {
-          params: {mode: 'direct', page, page_size: 50},
+          params: { mode: 'direct', page, page_size: 50 },
           headers,
           timeout: 20000,
         });
